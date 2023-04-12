@@ -13,6 +13,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::fallback(function () {
+    return view('home.404', [], [404]);
+});
+
+Route::name('home.')->group(function(){
+    Route::view('/', 'home.index')->name('index');
+    Route::view('/contact', 'home.contact')->name('contact');
+});
+
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::view('/dashboard', 'dashboard')->name('dashboard');
 });
