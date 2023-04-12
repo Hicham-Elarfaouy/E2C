@@ -24,6 +24,7 @@ Route::name('home.')->group(function(){
 
 Route::name('dash.')->group(function(){
     Route::name('users.')->group(function(){
+        Route::view('/users', 'dash.users.users')->name('users');
         Route::view('/user/add-user', 'dash.users.add_user')->name('add-user');
 //        Route::view('/user/update-user/{username}', 'dash.users.update_user')->name('update-user');
     });

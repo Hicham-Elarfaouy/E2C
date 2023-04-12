@@ -8,6 +8,14 @@ Alpine.plugin(focus);
 
 Alpine.start();
 
+// DataTable
+import DataTable from 'datatables.net-dt';
+// import 'datatables.net-responsive-dt';
+
+let table = new DataTable('#myTable', {
+    responsive: true
+});
+
 
 const roleSelect = document.getElementById('role')
 const codeBlock = document.getElementById('student-block')
