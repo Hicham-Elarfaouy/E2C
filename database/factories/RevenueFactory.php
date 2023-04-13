@@ -17,7 +17,8 @@ class RevenueFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'amount' => $this->faker->randomFloat(2, 1, 10000),
+            'description' => $this->faker->realText(),
         ];
     }
 }

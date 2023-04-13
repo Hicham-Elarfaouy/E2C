@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Attendance>
@@ -16,8 +17,11 @@ class AttendanceFactory extends Factory
      */
     public function definition(): array
     {
+        $users_ids = [4, 5];
         return [
-            //
+            'justify' => $this->faker->boolean(),
+            'duration' => $this->faker->numberBetween(1, 6),
+            'user_id' => $this->faker->randomElement($users_ids),
         ];
     }
 }
