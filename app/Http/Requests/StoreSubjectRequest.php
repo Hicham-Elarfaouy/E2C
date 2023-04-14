@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\IsTeacher;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreSubjectRequest extends FormRequest
@@ -11,7 +12,7 @@ class StoreSubjectRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,9 @@ class StoreSubjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'string'],
+            'description' => ['required', 'string'],
+            'user_id' => ['required', 'exists:App\Models\User,id', new IsTeacher()],
         ];
     }
 }

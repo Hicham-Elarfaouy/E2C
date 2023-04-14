@@ -29,9 +29,9 @@ return new class extends Migration
             $table->string('parent_name')->nullable();
             $table->string('parent_relation')->nullable();
             $table->string('parent_phone')->nullable();
-            $table->foreignId('role_id')->constrained();
-            $table->foreignId('classroom_id')->nullable()->constrained();
-            $table->foreignId('level_id')->nullable()->constrained();
+            $table->foreignId('role_id')->constrained()->onDelete('cascade');
+            $table->foreignId('classroom_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('level_id')->nullable()->constrained()->onDelete('set null');
             $table->timestamps();
         });
     }

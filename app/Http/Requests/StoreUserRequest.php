@@ -2,17 +2,16 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\IsTeacher;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateSubjectRequest extends FormRequest
+class StoreUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -23,9 +22,7 @@ class UpdateSubjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string'],
-            'description' => ['required', 'string'],
-            'user_id' => ['required', 'exists:App\Models\User,id', new IsTeacher()],
+            //
         ];
     }
 }

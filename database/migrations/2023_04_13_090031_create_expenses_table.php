@@ -16,7 +16,7 @@ return new class extends Migration
             $table->float('amount');
             $table->string('type');
             $table->text('description');
-            $table->foreignId('subject_id')->constrained();
+            $table->foreignId('subject_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

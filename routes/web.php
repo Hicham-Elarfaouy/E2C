@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,18 +24,14 @@ Route::name('home.')->group(function(){
     Route::view('/contact', 'home.contact')->name('contact');
 });
 
-Route::name('dash.')->group(function(){
-    Route::name('users.')->group(function(){
-        Route::view('/users', 'dash.users.users')->name('users');
-        Route::view('/user/add-user', 'dash.users.add_user')->name('add-user');
-//        Route::view('/user/update-user/{username}', 'dash.users.update_user')->name('update-user');
-    });
-});
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
     Route::view('/dashboard', 'dashboard')->name('dashboard');
+    Route::name('dash.')->group(function(){
+        Route::resource('users', UserController::class);
+        Route::resource('subjects', SubjectController::class)->except(['create', 'show']);
+    });
 });

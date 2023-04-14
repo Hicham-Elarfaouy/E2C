@@ -110,4 +110,19 @@
             </form>
         </div>
     </x-slot>
+    <x-slot name="script">
+        <script>
+            const roleSelect = document.getElementById('role')
+            const codeBlock = document.getElementById('student-block')
+
+            roleSelect.addEventListener('change', () => {
+                const selectedValue = roleSelect.value
+                if (selectedValue === "student") {
+                    codeBlock.classList.remove('hidden')
+                } else {
+                    codeBlock.classList.add('hidden')
+                }
+            })
+        </script>
+    </x-slot>
 </x-app-layout>
