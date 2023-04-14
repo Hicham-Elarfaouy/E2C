@@ -5,23 +5,29 @@ namespace App\Http\Controllers;
 use App\Models\Classroom;
 use App\Http\Requests\StoreClassroomRequest;
 use App\Http\Requests\UpdateClassroomRequest;
+use Rap2hpoutre\FastExcel\FastExcel;
 
 class ClassroomController extends Controller
 {
+    /**
+     * export a listing of the resource.
+     */
+    public function export()
+    {
+        $classrooms = Classroom::all();
+
+        // Export Data
+        return (new FastExcel($classrooms))->download('classrooms.xlsx');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-    }
+        $classrooms = Classroom::all();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return view('dash.classrooms.classrooms', compact('classrooms'));
     }
 
     /**
@@ -29,15 +35,9 @@ class ClassroomController extends Controller
      */
     public function store(StoreClassroomRequest $request)
     {
-        //
-    }
+        Classroom::create($request->all());
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Classroom $classroom)
-    {
-        //
+        return redirect()->route('dash.classrooms.index');
     }
 
     /**
@@ -45,7 +45,7 @@ class ClassroomController extends Controller
      */
     public function edit(Classroom $classroom)
     {
-        //
+        return view('dash.classrooms.update', compact('classroom'));
     }
 
     /**
@@ -53,7 +53,8 @@ class ClassroomController extends Controller
      */
     public function update(UpdateClassroomRequest $request, Classroom $classroom)
     {
-        //
+        $classroom->update($request->all());
+        return redirect()->route('dash.classrooms.index');
     }
 
     /**
@@ -61,6 +62,6 @@ class ClassroomController extends Controller
      */
     public function destroy(Classroom $classroom)
     {
-        //
+        $classroom->delete();
     }
 }

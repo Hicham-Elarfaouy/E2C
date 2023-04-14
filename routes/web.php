@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -32,7 +33,13 @@ Route::middleware([
     Route::view('/dashboard', 'dashboard')->name('dashboard');
     Route::name('dash.')->group(function(){
         Route::resource('users', UserController::class);
+
+//        entity subject
         Route::resource('subjects', SubjectController::class)->except(['create', 'show']);
         Route::post('/subjects/export', [SubjectController::class, 'export'])->name('subjects.export');
+
+//        entity classroom
+        Route::resource('classrooms', ClassroomController::class)->except(['create', 'show']);
+        Route::post('/classrooms/export', [ClassroomController::class, 'export'])->name('classrooms.export');
     });
 });
