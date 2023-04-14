@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,15 +15,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::fallback(function () {
-    return view('home.404', [], [404]);
-});
+//Route::fallback(function () {
+//    return view('home.404', [], [404]);
+//});
 
 Route::name('home.')->group(function(){
     Route::view('/', 'home.index')->name('index');
     Route::view('/contact', 'home.contact')->name('contact');
 });
-
 
 Route::middleware([
     'auth:sanctum',
@@ -29,4 +30,9 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::view('/dashboard', 'dashboard')->name('dashboard');
+    Route::name('dash.')->group(function(){
+        Route::resource('users', UserController::class);
+        Route::resource('subjects', SubjectController::class)->except(['create', 'show']);
+        Route::post('/subjects/export', [SubjectController::class, 'export'])->name('subjects.export');
+    });
 });

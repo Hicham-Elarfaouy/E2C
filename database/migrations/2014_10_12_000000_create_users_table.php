@@ -18,8 +18,20 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
+            $table->string('CIN')->unique()->nullable();
+            $table->string('CNE')->unique()->nullable();
+            $table->string('username')->unique();
+            $table->date('birthday');
+            $table->string('gender');
+            $table->string('phone');
+            $table->text('address');
+            $table->string('parent_name')->nullable();
+            $table->string('parent_relation')->nullable();
+            $table->string('parent_phone')->nullable();
+            $table->foreignId('role_id')->constrained()->onDelete('cascade');
+            $table->foreignId('classroom_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('level_id')->nullable()->constrained()->onDelete('set null');
             $table->timestamps();
         });
     }
