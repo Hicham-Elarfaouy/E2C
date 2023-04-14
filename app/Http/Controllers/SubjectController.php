@@ -7,9 +7,21 @@ use App\Http\Requests\StoreSubjectRequest;
 use App\Http\Requests\UpdateSubjectRequest;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use Rap2hpoutre\FastExcel\FastExcel;
 
 class SubjectController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
+    public function export()
+    {
+        $subjects = Subject::all();
+
+        // Export all users
+        return (new FastExcel($subjects))->download('file.xlsx');
+    }
+
     /**
      * Display a listing of the resource.
      */
