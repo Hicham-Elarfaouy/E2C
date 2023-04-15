@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\UserController;
@@ -41,5 +42,9 @@ Route::middleware([
 //        entity classroom
         Route::resource('classrooms', ClassroomController::class)->except(['create', 'show']);
         Route::post('/classrooms/export', [ClassroomController::class, 'export'])->name('classrooms.export');
+
+//        entity attendance
+        Route::resource('attendances', AttendanceController::class)->except(['create', 'show']);
+        Route::post('/attendances/export', [AttendanceController::class, 'export'])->name('attendances.export');
     });
 });
