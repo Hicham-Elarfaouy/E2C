@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\ClassroomController;
+use App\Http\Controllers\LevelController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -42,6 +43,10 @@ Route::middleware([
 //        entity classroom
         Route::resource('classrooms', ClassroomController::class)->except(['create', 'show']);
         Route::post('/classrooms/export', [ClassroomController::class, 'export'])->name('classrooms.export');
+
+//        entity level
+        Route::resource('levels', LevelController::class)->except(['create', 'show']);
+        Route::post('/levels/export', [LevelController::class, 'export'])->name('levels.export');
 
 //        entity attendance
         Route::resource('attendances', AttendanceController::class)->except(['create', 'show']);

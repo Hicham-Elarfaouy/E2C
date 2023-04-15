@@ -284,6 +284,9 @@
                                 <li>
                                     <a href="{{ route('dash.attendances.index') }}" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Attendances</a>
                                 </li>
+                                <li>
+                                    <a href="{{ route('dash.levels.index') }}" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Levels</a>
+                                </li>
                             </ul>
                         </li>
                         <li>
