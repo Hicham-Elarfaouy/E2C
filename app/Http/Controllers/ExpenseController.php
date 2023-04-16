@@ -36,6 +36,10 @@ class ExpenseController extends Controller
      */
     public function store(StoreExpenseRequest $request)
     {
+        if($request->type != 'subject'){
+            $request['subject_id'] = null;
+        }
+
         Expense::create($request->all());
         return redirect()->route('dash.expenses.index');
     }
@@ -54,6 +58,10 @@ class ExpenseController extends Controller
      */
     public function update(UpdateExpenseRequest $request, Expense $expense)
     {
+        if($request->type != 'subject'){
+            $request['subject_id'] = null;
+        }
+        
         $expense->update($request->all());
         return redirect()->route('dash.expenses.index');
     }
