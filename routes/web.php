@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\ClassroomController;
+use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\RevenueController;
 use App\Http\Controllers\SubjectController;
@@ -56,5 +57,9 @@ Route::middleware([
 //        entity revenue
         Route::resource('revenues', RevenueController::class)->except(['create', 'show']);
         Route::post('/revenues/export', [RevenueController::class, 'export'])->name('revenues.export');
+
+//        entity expense
+        Route::resource('expenses', ExpenseController::class)->except(['create', 'show']);
+        Route::post('/expenses/export', [ExpenseController::class, 'export'])->name('expenses.export');
     });
 });
