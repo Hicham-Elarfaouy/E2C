@@ -5,6 +5,7 @@ use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\NoteController;
+use App\Http\Controllers\RequestController;
 use App\Http\Controllers\ResultController;
 use App\Http\Controllers\RevenueController;
 use App\Http\Controllers\SubjectController;
@@ -71,5 +72,11 @@ Route::middleware([
 //        entity result
         Route::resource('results', ResultController::class)->except(['create', 'show']);
         Route::post('/results/export', [ResultController::class, 'export'])->name('results.export');
+
+//        entity request
+        Route::resource('requests', RequestController::class)->except(['edit', 'update']);
+        Route::post('/requests/solve/{request}', [RequestController::class, 'solve'])->name('requests.solve');
+        Route::get('/requests/user/{user}', [RequestController::class, 'show_user'])->name('requests.user');
+        Route::post('/requests/export', [RequestController::class, 'export'])->name('requests.export');
     });
 });
