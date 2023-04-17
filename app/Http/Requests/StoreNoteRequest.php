@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\IsStudent;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreNoteRequest extends FormRequest
@@ -11,7 +12,7 @@ class StoreNoteRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,9 @@ class StoreNoteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'note' => ['required', 'decimal:0,2', 'between:0,20'],
+            'user_id' => ['required', 'integer', 'exists:App\Models\User,id', new IsStudent()],
+            'subject_id' => ['required', 'integer', 'exists:App\Models\Subject,id'],
         ];
     }
 }
