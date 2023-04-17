@@ -55,9 +55,15 @@ class RequestController extends Controller
      */
     public function store(StoreRequestRequest $request)
     {
-        $request['user_id'] = Auth::user()->id;
+        $today = date("Y-m-d", strtotime(now()));
+        $auth_id = Auth::user()->id;
+        $limit_requests = Request::where('user_id', $auth_id)->where('created_at', 'like', "%$today%")->get();
+        if($limit_requests->count()){
+            return redirect()->back()->withErrors(['You have already reached the maximum daily requests.']);
+        }
+        $request['user_id'] = $auth_id;
         Request::create($request->all());
-        return redirect()->route('dash.requests.user', Auth::user()->id);
+        return redirect()->route('dash.requests.user', $auth_id);
     }
 
     /**

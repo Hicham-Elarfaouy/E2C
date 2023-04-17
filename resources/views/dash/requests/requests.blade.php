@@ -1,6 +1,5 @@
 <x-app-layout>
     <x-slot name="main">
-        <x-validation-errors class="mb-4 text-red-700 p-5"/>
         <div class="p-5">
             <div class="flex justify-content-between items-center">
                 <div>
