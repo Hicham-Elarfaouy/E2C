@@ -4,7 +4,7 @@
         <div class="p-5">
             <div class="flex justify-content-between items-center">
                 <div class="flex items-center mr-auto">
-                    <a href="{{ route('dash.notes.index') }}"
+                    <a href="{{ route('dash.results.index') }}"
                        class="inline-flex items-center justify-center text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                         <svg class="w-5 h-5 mr-2 -ml-1" viewBox="0 0 24 24" version="1.1"
                              xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -30,21 +30,21 @@
                     </a>
                 </div>
                 <div>
-                    <h6 class="font-bold text-xl">Note</h6>
+                    <h6 class="font-bold text-xl">Result</h6>
                 </div>
             </div>
             <hr class="my-5">
 
-            <form method="POST" action="{{ route('dash.notes.update', $note) }}">
+            <form method="POST" action="{{ route('dash.results.update', $result) }}">
                 @csrf
                 @method('PUT')
                 <!-- Modal body -->
                 <div class="space-y-4 mb-6">
                     <div>
-                        <label for="note"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Note</label>
-                        <input type="number" name="note" id="note" placeholder="Type note"
-                               value="{{ old('note') ?? $note->note }}" min="0.01" max="20" step="0.01" required
+                        <label for="result"
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Result</label>
+                        <input type="number" name="note" id="result" placeholder="Type result"
+                               value="{{ old('note') ?? $result->note }}" min="0.01" max="20" step="0.01" required
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                     </div>
                     <div>
@@ -55,19 +55,7 @@
                             <option value="">Select Student</option>
                             @foreach($users as $user)
                                 <option
-                                    {{ $user->id == $note->user_id ? 'selected' : '' }} value="{{ $user->id }}">{{ $user->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div>
-                        <label for="subject"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Subject</label>
-                        <select id="subject" name="subject_id" required
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                            <option value="">Select Subject</option>
-                            @foreach($subjects as $subject)
-                                <option
-                                    {{ $subject->id == $note->subject_id ? 'selected' : '' }} value="{{ $subject->id }}">{{ $subject->name }}</option>
+                                    {{ $user->id == $result->user_id ? 'selected' : '' }} value="{{ $user->id }}">{{ $user->name }}</option>
                             @endforeach
                         </select>
                     </div>
