@@ -368,7 +368,7 @@
             <main class="sm:ml-64">
                 <div class="py-12">
                     <div class="mx-auto sm:px-6">
-                        <div class="bg-white overflow-hidden sm:shadow-xl sm:rounded-lg">
+                        <div class="bg-white p-4 overflow-hidden sm:shadow-xl sm:rounded-lg">
                             {{ $main }}
                         </div>
                     </div>

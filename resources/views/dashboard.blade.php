@@ -1,5 +1,434 @@
 <x-app-layout>
     <x-slot name="main">
-        <x-welcome/>
+        <div>
+            <div class="grid w-full grid-cols-1 gap-4 mt-4 xl:grid-cols-3">
+                <div class="items-center xl:col-span-2 justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+                    <div class="flex justify-between">
+                        <span class="text-xl font-bold leading-none text-gray-900 sm:text-2xl dark:text-white">Desktop PC</span>
+                        <div>
+                            <span class="text-2xl font-bold leading-none text-gray-900 sm:text-3xl dark:text-white">2,340</span>
+                            <p class="flex items-center text-base font-normal text-gray-500 dark:text-gray-400">
+            <span class="flex items-center mr-1.5 text-sm text-green-500 dark:text-green-400">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path clip-rule="evenodd" fill-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z"></path>
+              </svg>
+              12.5%
+            </span>
+                                Since last month
+                            </p>
+                        </div>
+                    </div>
+                    <div class="w-full" style="min-height: 155px;">
+                        <canvas id="myChart"></canvas>
+                    </div>
+                </div>
+                <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+                    <h3 class="flex items-center mb-4 text-lg font-semibold text-gray-900 dark:text-white">Statistics this month
+                        <button data-popover-target="popover-description" data-popover-placement="bottom-end" type="button"><svg class="w-4 h-4 ml-2 text-gray-400 hover:text-gray-500" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path></svg><span class="sr-only">Show information</span></button>
+                    </h3>
+                    <div class="pt-4" id="faq" role="tabpanel" aria-labelledby="faq-tab">
+                        <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+                            <li class="py-3 sm:py-4">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center min-w-0">
+                                        <img class="flex-shrink-0 w-10 h-10" src="https://flowbite-admin-dashboard.vercel.app/images/products/iphone.png" alt="imac image">
+                                        <div class="ml-3">
+                                            <p class="font-medium text-gray-900 truncate dark:text-white">
+                                                iPhone 14 Pro
+                                            </p>
+                                            <div class="flex items-center justify-end flex-1 text-sm text-green-500 dark:text-green-400">
+                                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                    <path clip-rule="evenodd" fill-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z"></path>
+                                                </svg>
+                                                2.5%
+                                                <span class="ml-2 text-gray-500">vs last month</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                        $445,467
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="py-3 sm:py-4">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center min-w-0">
+                                        <img class="flex-shrink-0 w-10 h-10" src="https://flowbite-admin-dashboard.vercel.app/images/products/imac.png" alt="imac image">
+                                        <div class="ml-3">
+                                            <p class="font-medium text-gray-900 truncate dark:text-white">
+                                                Apple iMac 27"
+                                            </p>
+                                            <div class="flex items-center justify-end flex-1 text-sm text-green-500 dark:text-green-400">
+                                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                    <path clip-rule="evenodd" fill-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z"></path>
+                                                </svg>
+                                                12.5%
+                                                <span class="ml-2 text-gray-500">vs last month</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                        $256,982
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="py-3 sm:py-4">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center min-w-0">
+                                        <img class="flex-shrink-0 w-10 h-10" src="https://flowbite-admin-dashboard.vercel.app/images/products/watch.png" alt="watch image">
+                                        <div class="ml-3">
+                                            <p class="font-medium text-gray-900 truncate dark:text-white">
+                                                Apple Watch SE
+                                            </p>
+                                            <div class="flex items-center justify-end flex-1 text-sm text-red-600 dark:text-red-500">
+                                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                    <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a.75.75 0 01.75.75v10.638l3.96-4.158a.75.75 0 111.08 1.04l-5.25 5.5a.75.75 0 01-1.08 0l-5.25-5.5a.75.75 0 111.08-1.04l3.96 4.158V3.75A.75.75 0 0110 3z"></path>
+                                                </svg>
+                                                1.35%
+                                                <span class="ml-2 text-gray-500">vs last month</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                        $201,869
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="py-3 sm:py-4">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center min-w-0">
+                                        <img class="flex-shrink-0 w-10 h-10" src="https://flowbite-admin-dashboard.vercel.app/images/products/ipad.png" alt="ipad image">
+                                        <div class="ml-3">
+                                            <p class="font-medium text-gray-900 truncate dark:text-white">
+                                                Apple iPad Air
+                                            </p>
+                                            <div class="flex items-center justify-end flex-1 text-sm text-green-500 dark:text-green-400">
+                                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                    <path clip-rule="evenodd" fill-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z"></path>
+                                                </svg>
+                                                12.5%
+                                                <span class="ml-2 text-gray-500">vs last month</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                        $103,967
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="py-3 sm:py-4">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center min-w-0">
+                                        <img class="flex-shrink-0 w-10 h-10" src="https://flowbite-admin-dashboard.vercel.app/images/products/imac.png" alt="imac image">
+                                        <div class="ml-3">
+                                            <p class="font-medium text-gray-900 truncate dark:text-white">
+                                                Apple iMac 24"
+                                            </p>
+                                            <div class="flex items-center justify-end flex-1 text-sm text-red-600 dark:text-red-500">
+                                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                    <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a.75.75 0 01.75.75v10.638l3.96-4.158a.75.75 0 111.08 1.04l-5.25 5.5a.75.75 0 01-1.08 0l-5.25-5.5a.75.75 0 111.08-1.04l3.96 4.158V3.75A.75.75 0 0110 3z"></path>
+                                                </svg>
+                                                2%
+                                                <span class="ml-2 text-gray-500">vs last month</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                        $98,543
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="grid w-full grid-cols-2 gap-4 mt-4 xl:grid-cols-4 py-4">
+                <div class="border-l-8 border-l-red-300 items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+                    <div class="w-full">
+                        <h3 class="text-base font-normal text-gray-500 dark:text-gray-400">New products</h3>
+                        <span class="text-2xl font-bold leading-none text-gray-900 sm:text-3xl dark:text-white">2,340</span>
+                    </div>
+                </div>
+                <div class="border-l-8 border-l-blue-300 items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+                    <div class="w-full">
+                        <h3 class="text-base font-normal text-gray-500 dark:text-gray-400">New products</h3>
+                        <span class="text-2xl font-bold leading-none text-gray-900 sm:text-3xl dark:text-white">2,340</span>
+                    </div>
+                </div>
+                <div class="border-l-8 border-l-purple-300 items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+                    <div class="w-full">
+                        <h3 class="text-base font-normal text-gray-500 dark:text-gray-400">New products</h3>
+                        <span class="text-2xl font-bold leading-none text-gray-900 sm:text-3xl dark:text-white">2,340</span>
+                    </div>
+                </div>
+                <div class="border-l-8 border-l-gray-300 items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+                    <div class="w-full">
+                        <h3 class="text-base font-normal text-gray-500 dark:text-gray-400">New products</h3>
+                        <span class="text-2xl font-bold leading-none text-gray-900 sm:text-3xl dark:text-white">2,340</span>
+                    </div>
+                </div>
+            </div>
+            <div class="grid w-full grid-cols-1 gap-4 mt-4 xl:grid-cols-2">
+                <div class="items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+                    <div class="w-full">
+                        <h3 class="text-base font-normal text-gray-500 dark:text-gray-400">New products</h3>
+                        <span class="text-2xl font-bold leading-none text-gray-900 sm:text-3xl dark:text-white">2,340</span>
+                        <p class="flex items-center text-base font-normal text-gray-500 dark:text-gray-400">
+            <span class="flex items-center mr-1.5 text-sm text-green-500 dark:text-green-400">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path clip-rule="evenodd" fill-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z"></path>
+              </svg>
+              12.5%
+            </span>
+                            Since last month
+                        </p>
+                    </div>
+                    <div class="w-full" style="min-height: 155px;">
+                        <canvas id="myChart2"></canvas>
+                    </div>
+                </div>
+                <div class="items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+                    <div class="w-full">
+                        <h3 class="text-base font-normal text-gray-500 dark:text-gray-400">Users</h3>
+                        <span class="text-2xl font-bold leading-none text-gray-900 sm:text-3xl dark:text-white">2,340</span>
+                        <p class="flex items-center text-base font-normal text-gray-500 dark:text-gray-400">
+            <span class="flex items-center mr-1.5 text-sm text-green-500 dark:text-green-400">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path clip-rule="evenodd" fill-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z"></path>
+              </svg>
+              3,4%
+            </span>
+                            Since last month
+                        </p>
+                    </div>
+                    <div class="w-full flex justify-center" style="height: 300px;">
+                        <canvas id="myChart3"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4 p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+                    <div class="w-full">
+                        <h3 class="text-base font-normal text-gray-500 dark:text-gray-400">New products</h3>
+                        <span class="text-2xl font-bold leading-none text-gray-900 sm:text-3xl dark:text-white">2,340</span>
+                        <p class="flex items-center text-base font-normal text-gray-500 dark:text-gray-400">
+            <span class="flex items-center mr-1.5 text-sm text-green-500 dark:text-green-400">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path clip-rule="evenodd" fill-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z"></path>
+              </svg>
+              12.5%
+            </span>
+                            Since last month
+                        </p>
+                    </div>
+                    <div class="w-full" style="min-height: 155px;">
+                        <canvas id="myChart4"></canvas>
+                    </div>
+                </div>
+            <div class="grid w-full grid-cols-1 gap-4 mt-4 xl:grid-cols-2">
+                <div class="items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+                    <div class="w-full">
+                        <h3 class="text-base font-normal text-gray-500 dark:text-gray-400">New products</h3>
+                        <span class="text-2xl font-bold leading-none text-gray-900 sm:text-3xl dark:text-white">2,340</span>
+                        <p class="flex items-center text-base font-normal text-gray-500 dark:text-gray-400">
+            <span class="flex items-center mr-1.5 text-sm text-green-500 dark:text-green-400">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path clip-rule="evenodd" fill-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z"></path>
+              </svg>
+              12.5%
+            </span>
+                            Since last month
+                        </p>
+                    </div>
+                    <div class="w-full" style="min-height: 155px;">
+                        <canvas id="myChart5"></canvas>
+                    </div>
+                </div>
+                <div class="items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+                    <div class="w-full">
+                        <h3 class="text-base font-normal text-gray-500 dark:text-gray-400">Users</h3>
+                        <span class="text-2xl font-bold leading-none text-gray-900 sm:text-3xl dark:text-white">2,340</span>
+                        <p class="flex items-center text-base font-normal text-gray-500 dark:text-gray-400">
+            <span class="flex items-center mr-1.5 text-sm text-green-500 dark:text-green-400">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path clip-rule="evenodd" fill-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z"></path>
+              </svg>
+              3,4%
+            </span>
+                            Since last month
+                        </p>
+                    </div>
+                    <div class="w-full flex justify-center" style="height: 300px;">
+                        <canvas id="myChart6"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </x-slot>
+    <x-slot name="script">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            const ctx = document.getElementById('myChart');
+            const ctx2 = document.getElementById('myChart2');
+            const ctx3 = document.getElementById('myChart3');
+            const ctx4 = document.getElementById('myChart4');
+            const ctx5 = document.getElementById('myChart5');
+            const ctx6 = document.getElementById('myChart6');
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                    datasets: [{
+                        label: 'ST',
+                        data: [12, 19, 3, 5, 2, 3],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                    datasets: [{
+                        axis: 'y',
+                        label: 'My First Dataset',
+                        data: [65, 59, 80, 81, 56, 55, 40],
+                        fill: false,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                            'rgba(255, 205, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(201, 203, 207, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(255, 159, 64)',
+                            'rgb(255, 205, 86)',
+                            'rgb(75, 192, 192)',
+                            'rgb(54, 162, 235)',
+                            'rgb(153, 102, 255)',
+                            'rgb(201, 203, 207)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                }
+            });
+
+            new Chart(ctx3, {
+                type: 'pie',
+                data: {
+                    labels: [
+                        'Red',
+                        'Blue',
+                        'Yellow'
+                    ],
+                    datasets: [{
+                        label: 'My First Dataset',
+                        data: [300, 50, 100],
+                        backgroundColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(54, 162, 235)',
+                            'rgb(255, 205, 86)'
+                        ],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                }
+            });
+
+            new Chart(ctx4, {
+                type: 'line',
+                data: {
+                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                    datasets: [{
+                        label: 'ST',
+                        data: [12, 19, 3, 5, 2, 3],
+                        borderWidth: 1
+                    },{
+                        label: 'GT',
+                        data: [13, 59, 22, 15, 12, 12],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            new Chart(ctx5, {
+                type: 'bar',
+                data: {
+                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                    datasets: [{
+                        label: 'My First Dataset',
+                        data: [65, 59, 80, 81, 56, 55, 40],
+                        fill: false,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                            'rgba(255, 205, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(201, 203, 207, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(255, 159, 64)',
+                            'rgb(255, 205, 86)',
+                            'rgb(75, 192, 192)',
+                            'rgb(54, 162, 235)',
+                            'rgb(153, 102, 255)',
+                            'rgb(201, 203, 207)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+            });
+
+            new Chart(ctx6, {
+                type: 'pie',
+                data: {
+                    labels: [
+                        'Red',
+                        'Blue',
+                        'Yellow'
+                    ],
+                    datasets: [{
+                        label: 'My First Dataset',
+                        data: [300, 50, 100],
+                        backgroundColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(54, 162, 235)',
+                            'rgb(255, 205, 86)'
+                        ],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                }
+            });
+        </script>
     </x-slot>
 </x-app-layout>
