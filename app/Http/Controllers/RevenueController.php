@@ -5,23 +5,28 @@ namespace App\Http\Controllers;
 use App\Models\Revenue;
 use App\Http\Requests\StoreRevenueRequest;
 use App\Http\Requests\UpdateRevenueRequest;
+use Rap2hpoutre\FastExcel\FastExcel;
 
 class RevenueController extends Controller
 {
+    /**
+     * export a listing of the resource.
+     */
+    public function export()
+    {
+        $revenues = Revenue::all();
+
+        // Export Data
+        return (new FastExcel($revenues))->download('revenues.xlsx');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $revenues = Revenue::all();
+        return view('dash.revenues.revenues', compact('revenues'));
     }
 
     /**
@@ -29,15 +34,8 @@ class RevenueController extends Controller
      */
     public function store(StoreRevenueRequest $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Revenue $revenue)
-    {
-        //
+        Revenue::create($request->all());
+        return redirect()->route('dash.revenues.index');
     }
 
     /**
@@ -45,7 +43,7 @@ class RevenueController extends Controller
      */
     public function edit(Revenue $revenue)
     {
-        //
+        return view('dash.revenues.update', compact('revenue'));
     }
 
     /**
@@ -53,7 +51,8 @@ class RevenueController extends Controller
      */
     public function update(UpdateRevenueRequest $request, Revenue $revenue)
     {
-        //
+        $revenue->update($request->all());
+        return redirect()->route('dash.revenues.index');
     }
 
     /**
@@ -61,6 +60,6 @@ class RevenueController extends Controller
      */
     public function destroy(Revenue $revenue)
     {
-        //
+        $revenue->delete();
     }
 }

@@ -11,7 +11,7 @@ class UpdateRevenueRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class UpdateRevenueRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'amount' => ['required', 'decimal:0,2', 'min:0'],
+            'description' => ['required', 'string'],
         ];
     }
 }

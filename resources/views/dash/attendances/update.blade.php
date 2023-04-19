@@ -4,7 +4,7 @@
         <div class="p-5">
             <div class="flex justify-content-between items-center">
                 <div class="flex items-center mr-auto">
-                    <a href="{{ route('dash.subjects.index') }}"
+                    <a href="{{ route('dash.attendances.index') }}"
                        class="inline-flex items-center justify-center text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                         <svg class="w-5 h-5 mr-2 -ml-1" viewBox="0 0 24 24" version="1.1"
                              xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -31,39 +31,51 @@
                     </a>
                 </div>
                 <div>
-                    <h6 class="font-bold text-xl">Subject</h6>
+                    <h6 class="font-bold text-xl">Attendance</h6>
                 </div>
             </div>
             <hr class="my-5">
 
-            <form method="POST" action="{{ route('dash.subjects.update', $subject) }}">
+            <form method="POST" action="{{ route('dash.attendances.update', $attendance) }}">
                 @csrf
                 @method('PUT')
                 <!-- Modal body -->
                 <div class="space-y-4 mb-6">
                     <div>
-                        <label for="name"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
-                        <input type="text" name="name" id="name" placeholder="Type name"
-                               value="{{ old('name') ?? $subject->name }}" required
+                        <label for="justify"
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Justify</label>
+                        <select id="justify" name="justify" required
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            <option value="">Select User</option>
+                            <option {{ $attendance->justify ? 'selected' : '' }} value="1">Justify</option>
+                            <option {{ $attendance->justify ? '' : 'selected' }} value="0">Non Justify</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="date"
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date</label>
+                        <input type="date" name="created_at" id="date"
+                               value="{{ old('date') ?? date("Y-m-d", strtotime($attendance->created_at)) }}" max="2000-01-01" required
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                     </div>
                     <div>
-                        <label for="teacher" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Teacher</label>
-                        <select id="teacher" name="user_id" required
+                        <label for="duration"
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Duration</label>
+                        <input type="number" name="duration" id="duration" placeholder="Type duration"
+                               value="{{ old('duration') ?? $attendance->duration }}" min="1" max="6" required
+                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                    </div>
+                    <div>
+                        <label for="user"
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">User</label>
+                        <select id="user" name="user_id" required
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                            <option value="">Select Teacher</option>
-                            @foreach($teachers as $teacher)
+                            <option value="">Select User</option>
+                            @foreach($users as $user)
                                 <option
-                                    {{ $teacher->id == $subject->user_id ? 'selected' : '' }} value="{{ $teacher->id }}">{{ $teacher->name }}</option>
+                                    {{ $user->id == $attendance->user_id ? 'selected' : '' }} value="{{ $user->id }}">{{ $user->name }}</option>
                             @endforeach
                         </select>
-                    </div>
-                    <div class="sm:col-span-2">
-                        <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-                        <textarea id="description" name="description" rows="4" placeholder="Write description here"
-                                  required
-                                  class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">{{ old('description') ?? $subject->description }}</textarea>
                     </div>
                 </div>
                 <!-- Modal footer -->
@@ -75,5 +87,10 @@
                 </div>
             </form>
         </div>
+    </x-slot>
+    <x-slot name="script">
+        <script>
+            document.querySelector("#date").max = new Date().toISOString().split("T")[0];
+        </script>
     </x-slot>
 </x-app-layout>

@@ -5,23 +5,32 @@ namespace App\Http\Controllers;
 use App\Models\Attendance;
 use App\Http\Requests\StoreAttendanceRequest;
 use App\Http\Requests\UpdateAttendanceRequest;
+use App\Models\User;
+use Rap2hpoutre\FastExcel\FastExcel;
 
 class AttendanceController extends Controller
 {
+    /**
+     * export a listing of the resource.
+     */
+    public function export()
+    {
+        $attendances = Attendance::all();
+
+        // Export Data
+        return (new FastExcel($attendances))->download('attendances.xlsx');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $attendances = Attendance::all();
+        $users = User::whereHas('role', function ($query){
+            $query->where('name', 'Teacher')->orWhere('name', 'Student');
+        })->get();
+        return view('dash.attendances.attendances', compact('attendances', 'users'));
     }
 
     /**
@@ -29,15 +38,15 @@ class AttendanceController extends Controller
      */
     public function store(StoreAttendanceRequest $request)
     {
-        //
-    }
+        $date = date("Y-m-d 00:00:00", strtotime($request->created_at));
+        $collection = Attendance::where('user_id', $request->user_id)->where('created_at', $date)->pluck('duration');
+        $sum = array_sum($collection->toArray());
+        if($sum > 6){
+            return back()->withErrors(['You have already reached the maximum daily duration.']);
+        }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Attendance $attendance)
-    {
-        //
+        Attendance::create($request->all());
+        return redirect()->route('dash.attendances.index');
     }
 
     /**
@@ -45,7 +54,10 @@ class AttendanceController extends Controller
      */
     public function edit(Attendance $attendance)
     {
-        //
+        $users = User::whereHas('role', function ($query){
+            $query->where('name', 'Teacher')->orWhere('name', 'Student');
+        })->get();
+        return view('dash.attendances.update', compact('attendance', 'users'));
     }
 
     /**
@@ -53,7 +65,15 @@ class AttendanceController extends Controller
      */
     public function update(UpdateAttendanceRequest $request, Attendance $attendance)
     {
-        //
+        $date = date("Y-m-d 00:00:00", strtotime($request->created_at));
+        $collection = Attendance::where('user_id', $request->user_id)->where('created_at', $date)->pluck('duration');
+        $sum = array_sum($collection->toArray());
+        if($sum > 6){
+            return back()->withErrors(['You have already reached the maximum daily duration.']);
+        }
+
+        $attendance->update($request->all());
+        return redirect()->route('dash.attendances.index');
     }
 
     /**
@@ -61,6 +81,6 @@ class AttendanceController extends Controller
      */
     public function destroy(Attendance $attendance)
     {
-        //
+        $attendance->delete();
     }
 }

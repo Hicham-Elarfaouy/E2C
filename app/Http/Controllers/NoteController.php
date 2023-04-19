@@ -5,23 +5,35 @@ namespace App\Http\Controllers;
 use App\Models\Note;
 use App\Http\Requests\StoreNoteRequest;
 use App\Http\Requests\UpdateNoteRequest;
+use App\Models\Subject;
+use App\Models\User;
+use Rap2hpoutre\FastExcel\FastExcel;
 
 class NoteController extends Controller
 {
+    /**
+     * export a listing of the resource.
+     */
+    public function export()
+    {
+        $notes = Note::all();
+
+        // Export Data
+        return (new FastExcel($notes))->download('notes.xlsx');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-    }
+        $notes = Note::all();
+        $subjects = Subject::all();
+        $users = User::whereHas('role', function ($query){
+            $query->where('name', 'Student');
+        })->get();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return view('dash.notes.notes', compact('notes', 'subjects', 'users'));
     }
 
     /**
@@ -29,15 +41,8 @@ class NoteController extends Controller
      */
     public function store(StoreNoteRequest $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Note $note)
-    {
-        //
+        Note::create($request->all());
+        return redirect()->route('dash.notes.index');
     }
 
     /**
@@ -45,7 +50,12 @@ class NoteController extends Controller
      */
     public function edit(Note $note)
     {
-        //
+        $subjects = Subject::all();
+        $users = User::whereHas('role', function ($query){
+            $query->where('name', 'Student');
+        })->get();
+
+        return view('dash.notes.update', compact('note', 'subjects', 'users'));
     }
 
     /**
@@ -53,7 +63,8 @@ class NoteController extends Controller
      */
     public function update(UpdateNoteRequest $request, Note $note)
     {
-        //
+        $note->update($request->all());
+        return redirect()->route('dash.notes.index');
     }
 
     /**
@@ -61,6 +72,6 @@ class NoteController extends Controller
      */
     public function destroy(Note $note)
     {
-        //
+        $note->delete();
     }
 }

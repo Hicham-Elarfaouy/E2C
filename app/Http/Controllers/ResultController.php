@@ -5,23 +5,33 @@ namespace App\Http\Controllers;
 use App\Models\Result;
 use App\Http\Requests\StoreResultRequest;
 use App\Http\Requests\UpdateResultRequest;
+use App\Models\User;
+use Rap2hpoutre\FastExcel\FastExcel;
 
 class ResultController extends Controller
 {
+    /**
+     * export a listing of the resource.
+     */
+    public function export()
+    {
+        $results = Result::all();
+
+        // Export Data
+        return (new FastExcel($results))->download('results.xlsx');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-    }
+        $results = Result::all();
+        $users = User::whereHas('role', function ($query){
+            $query->where('name', 'Student');
+        })->get();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return view('dash.results.results', compact('results', 'users'));
     }
 
     /**
@@ -29,15 +39,8 @@ class ResultController extends Controller
      */
     public function store(StoreResultRequest $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Result $result)
-    {
-        //
+        Result::create($request->all());
+        return redirect()->route('dash.results.index');
     }
 
     /**
@@ -45,7 +48,11 @@ class ResultController extends Controller
      */
     public function edit(Result $result)
     {
-        //
+        $users = User::whereHas('role', function ($query){
+            $query->where('name', 'Student');
+        })->get();
+
+        return view('dash.results.update', compact('result', 'users'));
     }
 
     /**
@@ -53,7 +60,8 @@ class ResultController extends Controller
      */
     public function update(UpdateResultRequest $request, Result $result)
     {
-        //
+        $result->update($request->all());
+        return redirect()->route('dash.results.index');
     }
 
     /**
@@ -61,6 +69,6 @@ class ResultController extends Controller
      */
     public function destroy(Result $result)
     {
-        //
+        $result->delete();
     }
 }

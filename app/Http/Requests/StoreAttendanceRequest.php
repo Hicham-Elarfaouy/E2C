@@ -11,7 +11,7 @@ class StoreAttendanceRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class StoreAttendanceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'justify' => ['required', 'boolean'],
+            'created_at' => ['required', 'date'],
+            'duration' => ['required', 'integer', 'between:1,6'],
+            'user_id' => ['required', 'exists:App\Models\User,id'],
         ];
     }
 }

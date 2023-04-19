@@ -5,23 +5,30 @@ namespace App\Http\Controllers;
 use App\Models\Expense;
 use App\Http\Requests\StoreExpenseRequest;
 use App\Http\Requests\UpdateExpenseRequest;
+use App\Models\Subject;
+use Rap2hpoutre\FastExcel\FastExcel;
 
 class ExpenseController extends Controller
 {
+    /**
+     * export a listing of the resource.
+     */
+    public function export()
+    {
+        $expenses = Expense::all();
+
+        // Export Data
+        return (new FastExcel($expenses))->download('expenses.xlsx');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $subjects = Subject::all();
+        $expenses = Expense::all();
+        return view('dash.expenses.expenses', compact('expenses', 'subjects'));
     }
 
     /**
@@ -29,15 +36,12 @@ class ExpenseController extends Controller
      */
     public function store(StoreExpenseRequest $request)
     {
-        //
-    }
+        if($request->type != 'subject'){
+            $request['subject_id'] = null;
+        }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Expense $expense)
-    {
-        //
+        Expense::create($request->all());
+        return redirect()->route('dash.expenses.index');
     }
 
     /**
@@ -45,7 +49,8 @@ class ExpenseController extends Controller
      */
     public function edit(Expense $expense)
     {
-        //
+        $subjects = Subject::all();
+        return view('dash.expenses.update', compact('expense', 'subjects'));
     }
 
     /**
@@ -53,7 +58,12 @@ class ExpenseController extends Controller
      */
     public function update(UpdateExpenseRequest $request, Expense $expense)
     {
-        //
+        if($request->type != 'subject'){
+            $request['subject_id'] = null;
+        }
+        
+        $expense->update($request->all());
+        return redirect()->route('dash.expenses.index');
     }
 
     /**
@@ -61,6 +71,6 @@ class ExpenseController extends Controller
      */
     public function destroy(Expense $expense)
     {
-        //
+        $expense->delete();
     }
 }

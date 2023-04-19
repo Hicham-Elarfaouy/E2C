@@ -4,7 +4,7 @@
         <div class="p-5">
             <div class="flex justify-content-between items-center">
                 <div>
-                    <h6 class="font-bold text-xl">Subjects</h6>
+                    <h6 class="font-bold text-xl">Revenues</h6>
                 </div>
                 <div class="flex items-center ml-auto space-x-2 sm:space-x-3">
                     <button id="defaultModalButton" data-modal-toggle="defaultModal"
@@ -15,9 +15,9 @@
                                   d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
                                   clip-rule="evenodd"></path>
                         </svg>
-                        Add Subject
+                        Add Revenue
                     </button>
-                    <form method="post" action="{{ route('dash.subjects.export') }}">
+                    <form method="post" action="{{ route('dash.revenues.export') }}">
                         @csrf
                         <button type="submit"
                                 class="inline-flex items-center justify-center text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
@@ -36,23 +36,23 @@
             <table id="myTable" class="stripe" style="width:100%">
                 <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Teacher</th>
+                    <th>Date</th>
+                    <th>Amount</th>
                     <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                @forelse($subjects as $subject)
+                @forelse($revenues as $revenue)
                     <tr>
-                        <td>{{ $subject->name }}</td>
-                        <td>{{ $subject->user->name }}</td>
+                        <td>{{ date("d M Y", strtotime($revenue->created_at)) }}</td>
+                        <td>$ {{ $revenue->amount }}</td>
                         <td>
                             <div class="flex items-center space-x-6 whitespace-nowrap">
-                                <a href="{{ route('dash.subjects.edit', $subject->id) }}"
+                                <a href="{{ route('dash.revenues.edit', $revenue->id) }}"
                                    class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-800 rounded-lg text-center inline-flex items-center hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                     Edit
                                 </a>
-                                <button onclick="deleteRecord({{ $subject->id }})" type="button"
+                                <button onclick="deleteRecord({{ $revenue->id }})" type="button"
                                         class="px-3 py-2 text-xs font-medium text-center text-white bg-red-700 rounded-lg text-center inline-flex items-center hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                     Delete
                                 </button>
@@ -67,8 +67,8 @@
                 </tbody>
                 <tfoot>
                 <tr>
-                    <th>Name</th>
-                    <th>Teacher</th>
+                    <th>Date</th>
+                    <th>Amount</th>
                     <th>Action</th>
                 </tr>
                 </tfoot>
@@ -84,7 +84,7 @@
                         <div
                             class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
                             <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                Subject
+                                Revenue
                             </h3>
                             <button type="button"
                                     class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
@@ -99,28 +99,16 @@
                             </button>
                         </div>
 
-                        <form method="POST" action="{{ route('dash.subjects.store') }}">
+                        <form method="POST" action="{{ route('dash.revenues.store') }}">
                             @csrf
                             <!-- Modal body -->
                             <div class="space-y-4 mb-6">
                                 <div>
-                                    <label for="name"
-                                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
-                                    <input type="text" name="name" id="name" placeholder="Type name"
-                                           value="{{ old('name') }}" required
+                                    <label for="amount"
+                                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Amount</label>
+                                    <input type="number" name="amount" id="amount" placeholder="Type amount"
+                                           value="{{ old('amount') }}" min="0.01" step="0.01" required
                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                </div>
-                                <div>
-                                    <label for="teacher"
-                                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Teacher</label>
-                                    <select id="teacher" name="user_id" required
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                        <option value="">Select Teacher</option>
-                                        @foreach($teachers as $teacher)
-                                            <option
-                                                {{ $teacher->id == old('user_id') ? 'selected' : '' }} value="{{ $teacher->id }}">{{ $teacher->name }}</option>
-                                        @endforeach
-                                    </select>
                                 </div>
                                 <div class="sm:col-span-2">
                                     <label for="description"
@@ -161,7 +149,7 @@
                     confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        axios.delete(`/subjects/${id}`)
+                        axios.delete(`/revenues/${id}`)
                             .then(function (response) {
                                 console.log(response)
                                 if (response.status == 200) {

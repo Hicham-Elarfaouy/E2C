@@ -5,23 +5,28 @@ namespace App\Http\Controllers;
 use App\Models\Level;
 use App\Http\Requests\StoreLevelRequest;
 use App\Http\Requests\UpdateLevelRequest;
+use Rap2hpoutre\FastExcel\FastExcel;
 
 class LevelController extends Controller
 {
+    /**
+     * export a listing of the resource.
+     */
+    public function export()
+    {
+        $levels = Level::all();
+
+        // Export Data
+        return (new FastExcel($levels))->download('levels.xlsx');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $levels = Level::all();
+        return view('dash.levels.levels', compact('levels'));
     }
 
     /**
@@ -29,15 +34,8 @@ class LevelController extends Controller
      */
     public function store(StoreLevelRequest $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Level $level)
-    {
-        //
+        Level::create($request->all());
+        return redirect()->route('dash.levels.index');
     }
 
     /**
@@ -45,7 +43,7 @@ class LevelController extends Controller
      */
     public function edit(Level $level)
     {
-        //
+        return view('dash.levels.update', compact('level'));
     }
 
     /**
@@ -53,7 +51,8 @@ class LevelController extends Controller
      */
     public function update(UpdateLevelRequest $request, Level $level)
     {
-        //
+        $level->update($request->all());
+        return redirect()->route('dash.levels.index');
     }
 
     /**
@@ -61,6 +60,6 @@ class LevelController extends Controller
      */
     public function destroy(Level $level)
     {
-        //
+        $level->delete();
     }
 }

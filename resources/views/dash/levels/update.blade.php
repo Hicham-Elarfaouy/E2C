@@ -4,7 +4,7 @@
         <div class="p-5">
             <div class="flex justify-content-between items-center">
                 <div class="flex items-center mr-auto">
-                    <a href="{{ route('dash.subjects.index') }}"
+                    <a href="{{ route('dash.levels.index') }}"
                        class="inline-flex items-center justify-center text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                         <svg class="w-5 h-5 mr-2 -ml-1" viewBox="0 0 24 24" version="1.1"
                              xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -26,17 +26,16 @@
                                 </g>
                             </g>
                         </svg>
-                        {{--                        <svg class="w-5 h-5 mr-2 -ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z" clip-rule="evenodd"></path></svg>--}}
                         back
                     </a>
                 </div>
                 <div>
-                    <h6 class="font-bold text-xl">Subject</h6>
+                    <h6 class="font-bold text-xl">Level</h6>
                 </div>
             </div>
             <hr class="my-5">
 
-            <form method="POST" action="{{ route('dash.subjects.update', $subject) }}">
+            <form method="POST" action="{{ route('dash.levels.update', $level) }}">
                 @csrf
                 @method('PUT')
                 <!-- Modal body -->
@@ -45,25 +44,8 @@
                         <label for="name"
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
                         <input type="text" name="name" id="name" placeholder="Type name"
-                               value="{{ old('name') ?? $subject->name }}" required
+                               value="{{ old('name') ?? $level->name }}" required
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                    </div>
-                    <div>
-                        <label for="teacher" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Teacher</label>
-                        <select id="teacher" name="user_id" required
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                            <option value="">Select Teacher</option>
-                            @foreach($teachers as $teacher)
-                                <option
-                                    {{ $teacher->id == $subject->user_id ? 'selected' : '' }} value="{{ $teacher->id }}">{{ $teacher->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="sm:col-span-2">
-                        <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-                        <textarea id="description" name="description" rows="4" placeholder="Write description here"
-                                  required
-                                  class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">{{ old('description') ?? $subject->description }}</textarea>
                     </div>
                 </div>
                 <!-- Modal footer -->
