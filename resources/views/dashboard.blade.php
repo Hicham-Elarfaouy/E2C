@@ -145,26 +145,26 @@
             <div class="grid w-full grid-cols-2 gap-4 mt-4 xl:grid-cols-4 py-4">
                 <div class="border-l-8 border-l-red-300 items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
                     <div class="w-full">
-                        <h3 class="text-base font-normal text-gray-500 dark:text-gray-400">New products</h3>
-                        <span class="text-2xl font-bold leading-none text-gray-900 sm:text-3xl dark:text-white">2,340</span>
+                        <h3 class="text-base font-normal text-gray-500 dark:text-gray-400">Students this year</h3>
+                        <span class="text-2xl font-bold leading-none text-gray-900 sm:text-3xl dark:text-white">{{ $global['students'] }}</span>
                     </div>
                 </div>
                 <div class="border-l-8 border-l-blue-300 items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
                     <div class="w-full">
-                        <h3 class="text-base font-normal text-gray-500 dark:text-gray-400">New products</h3>
-                        <span class="text-2xl font-bold leading-none text-gray-900 sm:text-3xl dark:text-white">2,340</span>
+                        <h3 class="text-base font-normal text-gray-500 dark:text-gray-400">Requests this year</h3>
+                        <span class="text-2xl font-bold leading-none text-gray-900 sm:text-3xl dark:text-white">{{ $global['requests'] }}</span>
                     </div>
                 </div>
                 <div class="border-l-8 border-l-purple-300 items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
                     <div class="w-full">
-                        <h3 class="text-base font-normal text-gray-500 dark:text-gray-400">New products</h3>
-                        <span class="text-2xl font-bold leading-none text-gray-900 sm:text-3xl dark:text-white">2,340</span>
+                        <h3 class="text-base font-normal text-gray-500 dark:text-gray-400">Attendances this year</h3>
+                        <span class="text-2xl font-bold leading-none text-gray-900 sm:text-3xl dark:text-white">{{ $global['attendances'] }} <span class="text-base font-normal text-gray-500 dark:text-gray-400">transaction</span></span>
                     </div>
                 </div>
                 <div class="border-l-8 border-l-gray-300 items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
                     <div class="w-full">
-                        <h3 class="text-base font-normal text-gray-500 dark:text-gray-400">New products</h3>
-                        <span class="text-2xl font-bold leading-none text-gray-900 sm:text-3xl dark:text-white">2,340</span>
+                        <h3 class="text-base font-normal text-gray-500 dark:text-gray-400">Attendances this year</h3>
+                        <span class="text-2xl font-bold leading-none text-gray-900 sm:text-3xl dark:text-white">{{ $global['attendance_hour'] }} <span class="text-base font-normal text-gray-500 dark:text-gray-400">hours</span></span>
                     </div>
                 </div>
             </div>

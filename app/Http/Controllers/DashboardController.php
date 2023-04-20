@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Attendance;
 use App\Models\Classroom;
+use App\Models\Subject;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -15,12 +16,14 @@ class DashboardController extends Controller
     private mixed $start_academic_season;
     private mixed $end_academic_season;
     private array $global;
+    private array $popular_subject;
 
 
     public function __construct()
     {
         $this->setAcademicYear();
         $this->setGlobal();
+        $this->setPopularSubject();
     }
 
 
@@ -67,6 +70,18 @@ class DashboardController extends Controller
     }
 
 
+    // getter and setter of variable academic year
+    public function getPopularSubject(): array
+    {
+        return $this->popular_subject;
+    }
+
+    public function setPopularSubject(): void
+    {
+        $this->popular_subject = Subject::all()->toArray();
+    }
+
+
     // getter and setter of variable global
     private function getGlobal(): array
     {
@@ -84,7 +99,7 @@ class DashboardController extends Controller
             })->whereBetween('created_at', [$start_academic_season, $end_academic_season])->get()->count(),
             'requests' => \App\Models\Request::whereBetween('created_at', [$start_academic_season, $end_academic_season])->get()->count(),
             'attendances' => Attendance::whereBetween('created_at', [$start_academic_season, $end_academic_season])->get()->count(),
-            'classrooms' => Classroom::all()->count(),
+            'attendance_hour' => Attendance::whereBetween('created_at', [$start_academic_season, $end_academic_season])->get()->pluck('duration')->sum(),
         );
 
         $this->global = $array;
@@ -99,7 +114,7 @@ class DashboardController extends Controller
 //        dd($academic_season);
         $global = $this->getGlobal();
 //        dd($global);
-        return view('dashboard');
+        return view('dashboard', compact('global'));
     }
 
 }
