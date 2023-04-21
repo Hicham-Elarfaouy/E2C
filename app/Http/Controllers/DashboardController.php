@@ -18,6 +18,7 @@ class DashboardController extends Controller
     private array $global;
     private array $popular_subject;
     private array $chart_students;
+    private array $chart_requests;
 
 
     public function __construct()
@@ -26,6 +27,7 @@ class DashboardController extends Controller
         $this->setGlobal();
         $this->setPopularSubject();
         $this->setChartStudents();
+        $this->setChartRequests();
     }
 
 
@@ -143,6 +145,41 @@ class DashboardController extends Controller
     }
 
 
+    // getter and setter of variable chart students
+    public function getChartRequests(): array
+    {
+        return $this->chart_requests;
+    }
+
+    public function setChartRequests(): void
+    {
+        $start_academic_season = $this->getStartAcademicSeason();
+        $end_academic_season = $this->getEndAcademicSeason();
+
+        $requests = \App\Models\Request::whereBetween('created_at', [$start_academic_season, $end_academic_season])
+            ->selectRaw('MONTH(created_at) as month, COUNT(*) as total')
+            ->groupBy('month')
+            ->get();
+
+        $chart_data = $this->formatMonthRequests($requests);
+
+        $by_one_start_end = $this->subYearAcademicSeason(1);
+        $by_one_requests = \App\Models\Request::whereBetween('created_at', [$by_one_start_end[0], $by_one_start_end[1]])->get()->count();
+
+        $actual_start_end = $this->subYearAcademicSeason();
+        $actual_requests = \App\Models\Request::whereBetween('created_at', [$actual_start_end[0], $actual_start_end[1]])->get()->count();
+
+        $array = array(
+            'labels' => json_encode($chart_data[0]),
+            'data' => json_encode($chart_data[1]),
+            'all' => $actual_requests,
+            'state' => $by_one_requests == 0 ? 100 : ($actual_requests - $by_one_requests) / $by_one_requests * 100,
+        );
+
+        $this->chart_requests = $array;
+    }
+
+
     // render dashboard view
     public function index()
     {
@@ -151,10 +188,33 @@ class DashboardController extends Controller
 //        dd($academic_season);
         $global = $this->getGlobal();
         $chartStudents = $this->getChartStudents();
+        $chartRequests = $this->getChartRequests();
 //        dd($chartStudents);
-        return view('dashboard', compact('global', 'chartStudents'));
+        return view('dashboard', compact('global', 'chartStudents', 'chartRequests'));
     }
 
+
+    private function formatMonthRequests($collection): array
+    {
+        $months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+        $array = $collection->toArray();
+        $months_ids = $collection->pluck('month')->toArray();
+        for ($x = 1; $x <= 12; $x++) {
+            if(!in_array($x, $months_ids)){
+                $array[] = array(
+                    'month' => $x,
+                    'total' => 0,
+                );
+            }
+        }
+
+        asort($array);
+
+        $requests_by_month = collect($array)->pluck('total')->toArray();
+
+        return [$months, $requests_by_month];
+    }
 
     private function subYearAcademicSeason(int $sub_year = 0): array
     {
