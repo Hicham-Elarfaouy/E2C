@@ -19,6 +19,7 @@ class DashboardController extends Controller
     private array $popular_subject;
     private array $chart_students;
     private array $chart_requests;
+    private array $chart_gender;
 
 
     public function __construct()
@@ -28,6 +29,7 @@ class DashboardController extends Controller
         $this->setPopularSubject();
         $this->setChartStudents();
         $this->setChartRequests();
+        $this->setChartGender();
     }
 
 
@@ -180,6 +182,32 @@ class DashboardController extends Controller
     }
 
 
+    // getter and setter of variable chart gender
+    public function getChartGender(): array
+    {
+        return $this->chart_gender;
+    }
+
+    public function setChartGender(): void
+    {
+        $start_academic_season = $this->getStartAcademicSeason();
+        $end_academic_season = $this->getEndAcademicSeason();
+
+        $students = User::whereHas('role', function ($query) {
+            $query->where('name', 'Student');
+        })->whereBetween('created_at', [$start_academic_season, $end_academic_season])
+            ->selectRaw('gender, COUNT(*) as total')
+            ->groupBy('gender')->get();
+
+        $array = array(
+            'labels' => json_encode($students->pluck('gender')->toArray()),
+            'data' => json_encode($students->pluck('total')->toArray()),
+        );
+
+        $this->chart_gender = $array;
+    }
+
+
     // render dashboard view
     public function index()
     {
@@ -189,8 +217,9 @@ class DashboardController extends Controller
         $global = $this->getGlobal();
         $chartStudents = $this->getChartStudents();
         $chartRequests = $this->getChartRequests();
+        $chartGender = $this->getChartGender();
 //        dd($chartStudents);
-        return view('dashboard', compact('global', 'chartStudents', 'chartRequests'));
+        return view('dashboard', compact('global', 'chartStudents', 'chartRequests', 'chartGender'));
     }
 
 
