@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Attendance;
 use App\Models\Classroom;
 use App\Models\Expense;
+use App\Models\Revenue;
 use App\Models\Subject;
 use App\Models\User;
 use Carbon\Carbon;
@@ -22,6 +23,7 @@ class DashboardController extends Controller
     private array $chart_requests;
     private array $chart_gender;
     private array $chart_expenses;
+    private array $chart_revenues;
 
 
     public function __construct()
@@ -33,6 +35,7 @@ class DashboardController extends Controller
         $this->setChartRequests();
         $this->setChartGender();
         $this->setChartExpenses();
+        $this->setChartRevenues();
     }
 
 
@@ -246,6 +249,37 @@ class DashboardController extends Controller
     }
 
 
+    // getter and setter of variable chart revenues
+    public function getChartRevenues(): array
+    {
+        return $this->chart_revenues;
+    }
+
+    public function setChartRevenues(): void
+    {
+        $academic_year = $this->getAcademicYear();
+
+        $by_two_start_end = $this->subYearAcademicSeason(2);
+        $by_two_revenues = Revenue::whereBetween('created_at', [$by_two_start_end[0], $by_two_start_end[1]])->sum('amount');
+
+        $by_one_start_end = $this->subYearAcademicSeason(1);
+        $by_one_revenues = Revenue::whereBetween('created_at', [$by_one_start_end[0], $by_one_start_end[1]])->sum('amount');
+
+        $actual_start_end = $this->subYearAcademicSeason();
+        $actual_revenues = Revenue::whereBetween('created_at', [$actual_start_end[0], $actual_start_end[1]])->sum('amount');
+
+
+        $array = array(
+            'labels' => json_encode([$this->formatAcademicYear($academic_year, 2), $this->formatAcademicYear($academic_year, 1), $this->formatAcademicYear($academic_year)]),
+            'data' => json_encode([$by_two_revenues, $by_one_revenues, $actual_revenues]),
+            'all' => $actual_revenues,
+            'state' => $by_one_revenues == 0 ? 100 : round(($actual_revenues - $by_one_revenues) / $by_one_revenues * 100,2),
+        );
+
+        $this->chart_revenues = $array;
+    }
+
+
     // render dashboard view
     public function index()
     {
@@ -257,8 +291,9 @@ class DashboardController extends Controller
         $chartRequests = $this->getChartRequests();
         $chartGender = $this->getChartGender();
         $chartExpenses = $this->getChartExpenses();
+        $chartRevenues = $this->getChartRevenues();
 //        dd($chartStudents);
-        return view('dashboard', compact('global', 'chartStudents', 'chartRequests', 'chartGender', 'chartExpenses'));
+        return view('dashboard', compact('global', 'chartStudents', 'chartRequests', 'chartGender', 'chartExpenses', 'chartRevenues'));
     }
 
 

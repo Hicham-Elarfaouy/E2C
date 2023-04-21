@@ -313,19 +313,30 @@
                 <div
                     class="items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
                     <div class="w-full">
-                        <h3 class="text-base font-normal text-gray-500 dark:text-gray-400">New products</h3>
+                        <h3 class="text-base font-normal text-gray-500 dark:text-gray-400">Revenues</h3>
                         <span
-                            class="text-2xl font-bold leading-none text-gray-900 sm:text-3xl dark:text-white">2,340</span>
+                            class="text-2xl font-bold leading-none text-gray-900 sm:text-3xl dark:text-white">{{ $chartRevenues['all'] }} DH</span>
                         <p class="flex items-center text-base font-normal text-gray-500 dark:text-gray-400">
-            <span class="flex items-center mr-1.5 text-sm text-green-500 dark:text-green-400">
+                            @if($chartRevenues['state'] >= 0)
+                                <span class="flex items-center mr-1.5 text-sm text-green-500 dark:text-green-400">
               <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
                    aria-hidden="true">
                 <path clip-rule="evenodd" fill-rule="evenodd"
                       d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z"></path>
               </svg>
-              12.5%
+              {{ $chartRevenues['state'] }}%
             </span>
-                            Since last month
+                            @else
+                                <span class="flex items-center mr-1.5 text-sm text-red-500 dark:text-green-400">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                   aria-hidden="true">
+                                                    <path clip-rule="evenodd" fill-rule="evenodd"
+                                                          d="M10 3a.75.75 0 01.75.75v10.638l3.96-4.158a.75.75 0 111.08 1.04l-5.25 5.5a.75.75 0 01-1.08 0l-5.25-5.5a.75.75 0 111.08-1.04l3.96 4.158V3.75A.75.75 0 0110 3z"></path>
+                                                </svg>
+              {{ $chartRevenues['state'] }}%
+            </span>
+                            @endif
+                            Since last year
                         </p>
                     </div>
                     <div class="w-full" style="min-height: 155px;">
@@ -395,7 +406,7 @@
                         label: 'requests number',
                         data: {!! $chartRequests['data'] !!},
                         backgroundColor: [
-                            'rgba(75, 192, 192)',
+                            'rgb(193,127,250)',
                         ],
                         borderWidth: 1
                     }]
@@ -454,28 +465,12 @@
             new Chart(ctx5, {
                 type: 'bar',
                 data: {
-                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                    labels: {!! $chartRevenues['labels'] !!},
                     datasets: [{
-                        label: 'My First Dataset',
-                        data: [65, 59, 80, 81, 56, 55, 40],
-                        fill: false,
+                        label: 'revenues',
+                        data: {!! $chartRevenues['data'] !!},
                         backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(255, 159, 64, 0.2)',
-                            'rgba(255, 205, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(201, 203, 207, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgb(255, 99, 132)',
-                            'rgb(255, 159, 64)',
-                            'rgb(255, 205, 86)',
-                            'rgb(75, 192, 192)',
-                            'rgb(54, 162, 235)',
-                            'rgb(153, 102, 255)',
-                            'rgb(201, 203, 207)'
+                            'rgba(75, 192, 192)',
                         ],
                         borderWidth: 1
                     }]
