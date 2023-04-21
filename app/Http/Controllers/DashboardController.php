@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Attendance;
 use App\Models\Classroom;
+use App\Models\Expense;
 use App\Models\Subject;
 use App\Models\User;
 use Carbon\Carbon;
@@ -20,6 +21,7 @@ class DashboardController extends Controller
     private array $chart_students;
     private array $chart_requests;
     private array $chart_gender;
+    private array $chart_expenses;
 
 
     public function __construct()
@@ -30,6 +32,7 @@ class DashboardController extends Controller
         $this->setChartStudents();
         $this->setChartRequests();
         $this->setChartGender();
+        $this->setChartExpenses();
     }
 
 
@@ -163,7 +166,7 @@ class DashboardController extends Controller
             ->groupBy('month')
             ->get();
 
-        $chart_data = $this->formatMonthRequests($requests);
+        $chart_data = $this->formatToMonths($requests);
 
         $by_one_start_end = $this->subYearAcademicSeason(1);
         $by_one_requests = \App\Models\Request::whereBetween('created_at', [$by_one_start_end[0], $by_one_start_end[1]])->get()->count();
@@ -208,6 +211,41 @@ class DashboardController extends Controller
     }
 
 
+    // getter and setter of variable chart expenses
+    public function getChartExpenses(): array
+    {
+        return $this->chart_expenses;
+    }
+
+    public function setChartExpenses(): void
+    {
+        $start_academic_season = $this->getStartAcademicSeason();
+        $end_academic_season = $this->getEndAcademicSeason();
+
+        $expenses = Expense::whereBetween('created_at', [$start_academic_season, $end_academic_season])
+            ->selectRaw('MONTH(created_at) as month, SUM(amount) as total')
+            ->groupBy('month')
+            ->get();
+
+        $chart_data = $this->formatToMonths($expenses);
+
+        $by_one_start_end = $this->subYearAcademicSeason(1);
+        $by_one_expenses = Expense::whereBetween('created_at', [$by_one_start_end[0], $by_one_start_end[1]])->sum('amount');
+
+        $actual_start_end = $this->subYearAcademicSeason();
+        $actual_expenses = Expense::whereBetween('created_at', [$actual_start_end[0], $actual_start_end[1]])->sum('amount');
+
+        $array = array(
+            'labels' => json_encode($chart_data[0]),
+            'data' => json_encode($chart_data[1]),
+            'all' => $actual_expenses,
+            'state' => $by_one_expenses == 0 ? 100 : round(($actual_expenses - $by_one_expenses) / $by_one_expenses * 100, 2),
+        );
+
+        $this->chart_expenses = $array;
+    }
+
+
     // render dashboard view
     public function index()
     {
@@ -218,19 +256,20 @@ class DashboardController extends Controller
         $chartStudents = $this->getChartStudents();
         $chartRequests = $this->getChartRequests();
         $chartGender = $this->getChartGender();
+        $chartExpenses = $this->getChartExpenses();
 //        dd($chartStudents);
-        return view('dashboard', compact('global', 'chartStudents', 'chartRequests', 'chartGender'));
+        return view('dashboard', compact('global', 'chartStudents', 'chartRequests', 'chartGender', 'chartExpenses'));
     }
 
 
-    private function formatMonthRequests($collection): array
+    private function formatToMonths($collection): array
     {
         $months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
         $array = $collection->toArray();
         $months_ids = $collection->pluck('month')->toArray();
         for ($x = 1; $x <= 12; $x++) {
-            if(!in_array($x, $months_ids)){
+            if (!in_array($x, $months_ids)) {
                 $array[] = array(
                     'month' => $x,
                     'total' => 0,
