@@ -24,6 +24,7 @@ class DashboardController extends Controller
     private array $chart_gender;
     private array $chart_expenses;
     private array $chart_revenues;
+    private array $chart_subjects;
 
 
     public function __construct()
@@ -36,6 +37,7 @@ class DashboardController extends Controller
         $this->setChartGender();
         $this->setChartExpenses();
         $this->setChartRevenues();
+        $this->setChartSubjects();
     }
 
 
@@ -280,6 +282,33 @@ class DashboardController extends Controller
     }
 
 
+    // getter and setter of variable chart subjects
+    public function getChartSubjects(): array
+    {
+        return $this->chart_subjects;
+    }
+
+    public function setChartSubjects(): void
+    {
+        $start_academic_season = $this->getStartAcademicSeason();
+        $end_academic_season = $this->getEndAcademicSeason();
+
+        $subjects = Expense::where('type', 'subject')
+            ->whereBetween('expenses.created_at', [$start_academic_season, $end_academic_season])
+            ->join('subjects', 'expenses.subject_id', '=', 'subjects.id')
+            ->selectRaw('subjects.name as subject_name, SUM(expenses.amount) as total')
+            ->groupBy('expenses.subject_id')
+            ->get();
+
+        $array = array(
+            'labels' => json_encode($subjects->pluck('subject_name')->toArray()),
+            'data' => json_encode($subjects->pluck('total')->toArray()),
+        );
+
+        $this->chart_subjects = $array;
+    }
+
+
     // render dashboard view
     public function index()
     {
@@ -292,8 +321,9 @@ class DashboardController extends Controller
         $chartGender = $this->getChartGender();
         $chartExpenses = $this->getChartExpenses();
         $chartRevenues = $this->getChartRevenues();
+        $chartSubjects = $this->getChartSubjects();
 //        dd($chartStudents);
-        return view('dashboard', compact('global', 'chartStudents', 'chartRequests', 'chartGender', 'chartExpenses', 'chartRevenues'));
+        return view('dashboard', compact('global', 'chartStudents', 'chartRequests', 'chartGender', 'chartExpenses', 'chartRevenues', 'chartSubjects'));
     }
 
 
