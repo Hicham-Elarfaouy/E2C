@@ -7,6 +7,8 @@ use App\Models\Schedule;
 use App\Http\Requests\StoreScheduleRequest;
 use App\Http\Requests\UpdateScheduleRequest;
 use App\Models\Subject;
+use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Rap2hpoutre\FastExcel\FastExcel;
 
 class ScheduleController extends Controller
@@ -20,6 +22,36 @@ class ScheduleController extends Controller
 
         // Export Data
         return (new FastExcel($schedules))->download('schedules.xlsx');
+    }
+
+    /**
+     * export a listing of the resource.
+     */
+    public function exportPDF(User $user)
+    {
+        $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+        $hours = [8, 10, 14, 16];
+        $classroom = $user->classroom_id;
+        $schedules = Schedule::where('classroom_id', $classroom)->get();
+
+
+        $pdf = Pdf::loadView('dash.schedules.pdf', compact('schedules', 'hours', 'days'));
+
+        // Export Data
+        return $pdf->download('schedule.pdf');
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function schedule(User $user)
+    {
+        $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+        $hours = [8, 10, 14, 16];
+        $classroom = $user->classroom_id;
+        $schedules = Schedule::where('classroom_id', $classroom)->get();
+
+        return view('dash.schedules.show', compact('schedules', 'hours', 'days'));
     }
 
     /**

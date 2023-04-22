@@ -56,6 +56,8 @@ Route::middleware([
 
 //        entity schedule
         Route::resource('schedules', ScheduleController::class)->except(['create', 'show']);
+        Route::get('schedules/user/{user}', [ScheduleController::class, 'schedule'])->name('schedules.user');
+        Route::post('/schedules/exportPDF/{user}', [ScheduleController::class, 'exportPDF'])->name('schedules.exportPDF');
         Route::post('/schedules/export', [ScheduleController::class, 'export'])->name('schedules.export');
 
 //        entity level
