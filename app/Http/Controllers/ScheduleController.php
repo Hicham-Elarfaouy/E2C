@@ -39,6 +39,14 @@ class ScheduleController extends Controller
      */
     public function store(StoreScheduleRequest $request)
     {
+        $schedule_exist = Schedule::where('subject_id', $request->subject_id)
+            ->where('classroom_id', $request->classroom_id)
+            ->where('day', $request->day)->where('hour', $request->hour)->first();
+
+        if ($schedule_exist){
+            return redirect()->back()->withErrors('This schedule already exist.');
+        }
+
         Schedule::create($request->all());
         return redirect()->route('dash.schedules.index');
     }
@@ -58,6 +66,14 @@ class ScheduleController extends Controller
      */
     public function update(UpdateScheduleRequest $request, Schedule $schedule)
     {
+        $schedule_exist = Schedule::where('subject_id', $request->subject_id)
+            ->where('classroom_id', $request->classroom_id)
+            ->where('day', $request->day)->where('hour', $request->hour)->first();
+
+        if ($schedule_exist){
+            return redirect()->back()->withErrors('This schedule already exist.');
+        }
+
         $schedule->update($request->all());
         return redirect()->route('dash.schedules.index');
     }
