@@ -9,6 +9,7 @@ use App\Http\Controllers\NoteController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\ResultController;
 use App\Http\Controllers\RevenueController;
+use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -52,6 +53,10 @@ Route::middleware([
 //        entity classroom
         Route::resource('classrooms', ClassroomController::class)->except(['create', 'show']);
         Route::post('/classrooms/export', [ClassroomController::class, 'export'])->name('classrooms.export');
+
+//        entity schedule
+        Route::resource('schedules', ScheduleController::class)->except(['create', 'show']);
+        Route::post('/schedules/export', [ScheduleController::class, 'export'])->name('schedules.export');
 
 //        entity level
         Route::resource('levels', LevelController::class)->except(['create', 'show']);
