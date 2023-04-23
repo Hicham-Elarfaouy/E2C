@@ -39,160 +39,46 @@
                 </div>
                 <div
                     class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
-                    <h3 class="flex items-center mb-4 text-lg font-semibold text-gray-900 dark:text-white">Statistics
-                        this month
-                        <button data-popover-target="popover-description" data-popover-placement="bottom-end"
-                                type="button">
-                            <svg class="w-4 h-4 ml-2 text-gray-400 hover:text-gray-500" aria-hidden="true"
-                                 fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
-                                      clip-rule="evenodd"></path>
-                            </svg>
-                            <span class="sr-only">Show information</span></button>
+                    <h3 class="flex items-center mb-4 text-lg font-semibold text-gray-900 dark:text-white">
+                        Students by subject
                     </h3>
                     <div class="pt-4" id="faq" role="tabpanel" aria-labelledby="faq-tab">
                         <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
-                            <li class="py-3 sm:py-4">
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center min-w-0">
-                                        <img class="flex-shrink-0 w-10 h-10"
-                                             src="https://flowbite-admin-dashboard.vercel.app/images/products/iphone.png"
-                                             alt="imac image">
-                                        <div class="ml-3">
-                                            <p class="font-medium text-gray-900 truncate dark:text-white">
-                                                iPhone 14 Pro
-                                            </p>
-                                            <div
-                                                class="flex items-center justify-end flex-1 text-sm text-green-500 dark:text-green-400">
-                                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
-                                                     xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                                    <path clip-rule="evenodd" fill-rule="evenodd"
-                                                          d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z"></path>
-                                                </svg>
-                                                2.5%
-                                                <span class="ml-2 text-gray-500">vs last month</span>
+                            @foreach($subjects as $subject)
+                                <li class="py-3 sm:py-4">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center min-w-0">
+                                            <div class="ml-3">
+                                                <p class="font-medium text-gray-900 truncate dark:text-white">
+                                                    {{ $subject['subject'] }}
+                                                </p>
+                                                @if($subject['state'] >= 0)
+                                                    <div class="flex items-center justify-start flex-1 text-sm text-green-500 dark:text-green-400">
+                                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
+                                                             xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                            <path clip-rule="evenodd" fill-rule="evenodd"
+                                                                  d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z"></path>
+                                                        </svg>
+                                                @else
+                                                    <div class="flex items-center justify-start flex-1 text-sm text-red-500 dark:text-green-400">
+                                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
+                                                             xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                            <path clip-rule="evenodd" fill-rule="evenodd"
+                                                                  d="M10 3a.75.75 0 01.75.75v10.638l3.96-4.158a.75.75 0 111.08 1.04l-5.25 5.5a.75.75 0 01-1.08 0l-5.25-5.5a.75.75 0 111.08-1.04l3.96 4.158V3.75A.75.75 0 0110 3z"></path>
+                                                        </svg>
+                                                @endif
+                                                    {{ $subject['state'] }}%
+                                                    <span class="ml-2 text-gray-500">vs last year</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div
-                                        class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                                        $445,467
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="py-3 sm:py-4">
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center min-w-0">
-                                        <img class="flex-shrink-0 w-10 h-10"
-                                             src="https://flowbite-admin-dashboard.vercel.app/images/products/imac.png"
-                                             alt="imac image">
-                                        <div class="ml-3">
-                                            <p class="font-medium text-gray-900 truncate dark:text-white">
-                                                Apple iMac 27"
-                                            </p>
-                                            <div
-                                                class="flex items-center justify-end flex-1 text-sm text-green-500 dark:text-green-400">
-                                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
-                                                     xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                                    <path clip-rule="evenodd" fill-rule="evenodd"
-                                                          d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z"></path>
-                                                </svg>
-                                                12.5%
-                                                <span class="ml-2 text-gray-500">vs last month</span>
-                                            </div>
+                                        <div
+                                            class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                            {{ $subject['students'] }}
                                         </div>
                                     </div>
-                                    <div
-                                        class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                                        $256,982
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="py-3 sm:py-4">
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center min-w-0">
-                                        <img class="flex-shrink-0 w-10 h-10"
-                                             src="https://flowbite-admin-dashboard.vercel.app/images/products/watch.png"
-                                             alt="watch image">
-                                        <div class="ml-3">
-                                            <p class="font-medium text-gray-900 truncate dark:text-white">
-                                                Apple Watch SE
-                                            </p>
-                                            <div
-                                                class="flex items-center justify-end flex-1 text-sm text-red-600 dark:text-red-500">
-                                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
-                                                     xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                                    <path clip-rule="evenodd" fill-rule="evenodd"
-                                                          d="M10 3a.75.75 0 01.75.75v10.638l3.96-4.158a.75.75 0 111.08 1.04l-5.25 5.5a.75.75 0 01-1.08 0l-5.25-5.5a.75.75 0 111.08-1.04l3.96 4.158V3.75A.75.75 0 0110 3z"></path>
-                                                </svg>
-                                                1.35%
-                                                <span class="ml-2 text-gray-500">vs last month</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                                        $201,869
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="py-3 sm:py-4">
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center min-w-0">
-                                        <img class="flex-shrink-0 w-10 h-10"
-                                             src="https://flowbite-admin-dashboard.vercel.app/images/products/ipad.png"
-                                             alt="ipad image">
-                                        <div class="ml-3">
-                                            <p class="font-medium text-gray-900 truncate dark:text-white">
-                                                Apple iPad Air
-                                            </p>
-                                            <div
-                                                class="flex items-center justify-end flex-1 text-sm text-green-500 dark:text-green-400">
-                                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
-                                                     xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                                    <path clip-rule="evenodd" fill-rule="evenodd"
-                                                          d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z"></path>
-                                                </svg>
-                                                12.5%
-                                                <span class="ml-2 text-gray-500">vs last month</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                                        $103,967
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="py-3 sm:py-4">
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center min-w-0">
-                                        <img class="flex-shrink-0 w-10 h-10"
-                                             src="https://flowbite-admin-dashboard.vercel.app/images/products/imac.png"
-                                             alt="imac image">
-                                        <div class="ml-3">
-                                            <p class="font-medium text-gray-900 truncate dark:text-white">
-                                                Apple iMac 24"
-                                            </p>
-                                            <div
-                                                class="flex items-center justify-end flex-1 text-sm text-red-600 dark:text-red-500">
-                                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
-                                                     xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                                    <path clip-rule="evenodd" fill-rule="evenodd"
-                                                          d="M10 3a.75.75 0 01.75.75v10.638l3.96-4.158a.75.75 0 111.08 1.04l-5.25 5.5a.75.75 0 01-1.08 0l-5.25-5.5a.75.75 0 111.08-1.04l3.96 4.158V3.75A.75.75 0 0110 3z"></path>
-                                                </svg>
-                                                2%
-                                                <span class="ml-2 text-gray-500">vs last month</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                                        $98,543
-                                    </div>
-                                </div>
-                            </li>
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
