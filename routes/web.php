@@ -9,6 +9,7 @@ use App\Http\Controllers\NoteController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\ResultController;
 use App\Http\Controllers\RevenueController;
+use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -43,8 +44,9 @@ Route::middleware([
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::name('dash.')->group(function(){
-        Route::resource('users', UserController::class);
 
+        Route::resource('users', UserController::class);
+        Route::post('/users/export', [UserController::class, 'export'])->name('users.export');
 //        entity subject
         Route::resource('subjects', SubjectController::class)->except(['create', 'show']);
         Route::post('/subjects/export', [SubjectController::class, 'export'])->name('subjects.export');
@@ -52,6 +54,12 @@ Route::middleware([
 //        entity classroom
         Route::resource('classrooms', ClassroomController::class)->except(['create', 'show']);
         Route::post('/classrooms/export', [ClassroomController::class, 'export'])->name('classrooms.export');
+
+//        entity schedule
+        Route::resource('schedules', ScheduleController::class)->except(['create', 'show']);
+        Route::get('schedules/user/{user}', [ScheduleController::class, 'schedule'])->name('schedules.user');
+        Route::post('/schedules/exportPDF/{user}', [ScheduleController::class, 'exportPDF'])->name('schedules.exportPDF');
+        Route::post('/schedules/export', [ScheduleController::class, 'export'])->name('schedules.export');
 
 //        entity level
         Route::resource('levels', LevelController::class)->except(['create', 'show']);

@@ -5,9 +5,21 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use Rap2hpoutre\FastExcel\FastExcel;
 
 class UserController extends Controller
 {
+    /**
+     * export a listing of the resource.
+     */
+    public function export()
+    {
+        $users = User::all();
+
+        // Export Data
+        return (new FastExcel($users))->download('users.xlsx');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -62,6 +74,6 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
     }
 }

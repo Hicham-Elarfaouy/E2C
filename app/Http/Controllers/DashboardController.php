@@ -6,10 +6,12 @@ use App\Models\Attendance;
 use App\Models\Classroom;
 use App\Models\Expense;
 use App\Models\Revenue;
+use App\Models\Schedule;
 use App\Models\Subject;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -92,7 +94,37 @@ class DashboardController extends Controller
 
     public function setPopularSubject(): void
     {
-        $this->popular_subject = Subject::all()->toArray();
+        $array = array();
+
+        $subjects = Schedule::select('subject_id', DB::raw('GROUP_CONCAT(DISTINCT classroom_id) as classroom_ids'))
+        ->groupBy('subject_id')
+        ->get()->toArray();
+
+        foreach ($subjects as $subject){
+            $students = 0;
+            $oldStudents = 0;
+            $classrooms = explode(",", $subject['classroom_ids']);
+
+            foreach ($classrooms as $classroom){
+                $by_one_start_end = $this->subYearAcademicSeason(1);
+                $oldStudents += Classroom::find($classroom)->users->whereBetween('created_at', [$by_one_start_end[0], $by_one_start_end[1]])->count();
+
+                $actual_start_end = $this->subYearAcademicSeason();
+                $students += Classroom::find($classroom)->users->whereBetween('created_at', [$actual_start_end[0], $actual_start_end[1]])->count();
+            }
+
+            $array[] = [
+                "students" => $students,
+                "subject" => Subject::find($subject['subject_id'])->name,
+                "state" => $oldStudents == 0 ? 100 : ($students - $oldStudents) / $oldStudents * 100,
+            ];
+        }
+
+        arsort($array);
+
+        $array = array_slice($array, 0, 5);
+
+        $this->popular_subject = $array;
     }
 
 
@@ -312,18 +344,15 @@ class DashboardController extends Controller
     // render dashboard view
     public function index()
     {
-//        $academic_season = $this->getEndAcademicSeason();
-//        $academic_year = $this->getAcademicYear();
-//        dd($academic_season);
         $global = $this->getGlobal();
+        $subjects = $this->getPopularSubject();
         $chartStudents = $this->getChartStudents();
         $chartRequests = $this->getChartRequests();
         $chartGender = $this->getChartGender();
         $chartExpenses = $this->getChartExpenses();
         $chartRevenues = $this->getChartRevenues();
         $chartSubjects = $this->getChartSubjects();
-//        dd($chartStudents);
-        return view('dashboard', compact('global', 'chartStudents', 'chartRequests', 'chartGender', 'chartExpenses', 'chartRevenues', 'chartSubjects'));
+        return view('dashboard', compact('global', 'subjects', 'chartStudents', 'chartRequests', 'chartGender', 'chartExpenses', 'chartRevenues', 'chartSubjects'));
     }
 
 
