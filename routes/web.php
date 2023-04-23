@@ -44,8 +44,9 @@ Route::middleware([
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::name('dash.')->group(function(){
-        Route::resource('users', UserController::class);
 
+        Route::resource('users', UserController::class);
+        Route::post('/users/export', [UserController::class, 'export'])->name('users.export');
 //        entity subject
         Route::resource('subjects', SubjectController::class)->except(['create', 'show']);
         Route::post('/subjects/export', [SubjectController::class, 'export'])->name('subjects.export');

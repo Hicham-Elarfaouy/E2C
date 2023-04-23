@@ -10,10 +10,19 @@
                         <svg class="w-5 h-5 mr-2 -ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
                         Add user
                     </a>
-                    <button type="button" class="inline-flex items-center justify-center text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                        <svg class="w-5 h-5 mr-2 -ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z" clip-rule="evenodd"></path></svg>
-                        Export
-                    </button>
+                    <form method="post" action="{{ route('dash.users.export') }}">
+                        @csrf
+                        <button type="submit"
+                                class="inline-flex items-center justify-center text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                            <svg class="w-5 h-5 mr-2 -ml-1" fill="currentColor" viewBox="0 0 20 20"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                      d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z"
+                                      clip-rule="evenodd"></path>
+                            </svg>
+                            Export
+                        </button>
+                    </form>
                 </div>
             </div>
             <hr class="my-5">
@@ -43,13 +52,15 @@
                         <td>{{ $user->CIN }}</td>
                         <td>{{ $user->CNE }}</td>
                         <td>{{ $user->phone }}</td>
-                        <td>{{ $user->role_id }}</td>
+                        <td>{{ $user->role->name }}</td>
                         <td>
                             <div class="flex items-center space-x-6 whitespace-nowrap">
-                                <button type="button" class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-800 rounded-lg text-center inline-flex items-center hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                <a href="{{ route('dash.users.edit', $user->id) }}"
+                                   class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-800 rounded-lg text-center inline-flex items-center hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                     Edit
-                                </button>
-                                <button type="button" class="px-3 py-2 text-xs font-medium text-center text-white bg-red-700 rounded-lg text-center inline-flex items-center hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                </a>
+                                <button onclick="deleteRecord({{ $user->id }})" type="button"
+                                        class="px-3 py-2 text-xs font-medium text-center text-white bg-red-700 rounded-lg text-center inline-flex items-center hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                     Delete
                                 </button>
                             </div>
@@ -73,5 +84,37 @@
                 </tfoot>
             </table>
         </div>
+    </x-slot>
+    <x-slot name="script">
+        <script>
+            function deleteRecord(id) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        axios.delete(`/users/${id}`)
+                            .then(function (response) {
+                                console.log(response)
+                                if (response.status == 200) {
+                                    location.reload();
+                                }
+                            }).catch(function (error) {
+                            Swal.fire(
+                                'Deleted!',
+                                'Error when delete record.',
+                                'error'
+                            )
+                            console.log(error)
+                        })
+                    }
+                })
+            }
+        </script>
     </x-slot>
 </x-app-layout>
