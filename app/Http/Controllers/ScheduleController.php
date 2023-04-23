@@ -46,10 +46,16 @@ class ScheduleController extends Controller
      */
     public function schedule(User $user)
     {
+        $schedules = collect();
         $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
         $hours = [8, 10, 14, 16];
         $classroom = $user->classroom_id;
-        $schedules = Schedule::where('classroom_id', $classroom)->get();
+        if ($classroom){
+            $schedules = Schedule::where('classroom_id', $classroom)->get();
+        }else{
+            $subject = $user->subject->id ?? null;
+            $schedules = Schedule::where('subject_id', $subject)->get();
+        }
 
         return view('dash.schedules.show', compact('schedules', 'hours', 'days'));
     }
