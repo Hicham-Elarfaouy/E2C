@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             RevenueSeeder::class,
             RequestSeeder::class,
             AttendanceSeeder::class,
+            AbilitySeeder::class,
         ]);
     }
 }

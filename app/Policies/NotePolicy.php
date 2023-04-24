@@ -11,9 +11,19 @@ class NotePolicy
     /**
      * Determine whether the user can view any models.
      */
+    public function export(User $user): bool
+    {
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('notes', $abilities);
+    }
+
+    /**
+     * Determine whether the user can view any models.
+     */
     public function viewAny(User $user): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('notes', $abilities);
     }
 
     /**
@@ -29,7 +39,8 @@ class NotePolicy
      */
     public function create(User $user): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('notes', $abilities);
     }
 
     /**
@@ -37,7 +48,8 @@ class NotePolicy
      */
     public function update(User $user, Note $note): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('notes', $abilities);
     }
 
     /**
@@ -45,7 +57,8 @@ class NotePolicy
      */
     public function delete(User $user, Note $note): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('notes', $abilities);
     }
 
     /**

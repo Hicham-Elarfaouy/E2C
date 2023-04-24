@@ -11,9 +11,19 @@ class SubjectPolicy
     /**
      * Determine whether the user can view any models.
      */
+    public function export(User $user): bool
+    {
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('subjects', $abilities);
+    }
+
+    /**
+     * Determine whether the user can view any models.
+     */
     public function viewAny(User $user): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('subjects', $abilities);
     }
 
     /**
@@ -29,7 +39,8 @@ class SubjectPolicy
      */
     public function create(User $user): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('subjects', $abilities);
     }
 
     /**
@@ -37,7 +48,8 @@ class SubjectPolicy
      */
     public function update(User $user, Subject $subject): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('subjects', $abilities);
     }
 
     /**
@@ -45,7 +57,8 @@ class SubjectPolicy
      */
     public function delete(User $user, Subject $subject): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('subjects', $abilities);
     }
 
     /**

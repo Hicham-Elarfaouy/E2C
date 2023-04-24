@@ -11,9 +11,19 @@ class ExpensePolicy
     /**
      * Determine whether the user can view any models.
      */
+    public function export(User $user): bool
+    {
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('expenses', $abilities);
+    }
+
+    /**
+     * Determine whether the user can view any models.
+     */
     public function viewAny(User $user): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('expenses', $abilities);
     }
 
     /**
@@ -29,7 +39,8 @@ class ExpensePolicy
      */
     public function create(User $user): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('expenses', $abilities);
     }
 
     /**
@@ -37,7 +48,8 @@ class ExpensePolicy
      */
     public function update(User $user, Expense $expense): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('expenses', $abilities);
     }
 
     /**
@@ -45,7 +57,8 @@ class ExpensePolicy
      */
     public function delete(User $user, Expense $expense): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('expenses', $abilities);
     }
 
     /**

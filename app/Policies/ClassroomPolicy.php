@@ -11,9 +11,19 @@ class ClassroomPolicy
     /**
      * Determine whether the user can view any models.
      */
+    public function export(User $user): bool
+    {
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('classrooms', $abilities);
+    }
+
+    /**
+     * Determine whether the user can view any models.
+     */
     public function viewAny(User $user): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('classrooms', $abilities);
     }
 
     /**
@@ -29,7 +39,8 @@ class ClassroomPolicy
      */
     public function create(User $user): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('classrooms', $abilities);
     }
 
     /**
@@ -37,7 +48,8 @@ class ClassroomPolicy
      */
     public function update(User $user, Classroom $classroom): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('classrooms', $abilities);
     }
 
     /**
@@ -45,7 +57,8 @@ class ClassroomPolicy
      */
     public function delete(User $user, Classroom $classroom): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('classrooms', $abilities);
     }
 
     /**

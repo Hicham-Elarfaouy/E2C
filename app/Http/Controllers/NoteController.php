@@ -11,11 +11,17 @@ use Rap2hpoutre\FastExcel\FastExcel;
 
 class NoteController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Note::class, 'note');
+    }
+
     /**
      * export a listing of the resource.
      */
     public function export()
     {
+        $this->authorize('export', Note::class);
         $notes = Note::all();
 
         // Export Data

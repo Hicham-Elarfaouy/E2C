@@ -24,9 +24,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'name', 'email', 'password', 'cin', 'cne', 'username', 'phone', 'gender', 'birthday', 'address', 'role_id', 'classroom_id', 'level_id', 'parent_name', 'parent_relation', 'parent_phone'
     ];
 
     /**
@@ -67,5 +65,15 @@ class User extends Authenticatable
     public function subject()
     {
         return $this->hasOne(Subject::class);
+    }
+
+    public function classroom()
+    {
+        return $this->belongsTo(Classroom::class);
+    }
+
+    public function level()
+    {
+        return $this->belongsTo(Level::class);
     }
 }

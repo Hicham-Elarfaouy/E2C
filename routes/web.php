@@ -46,7 +46,9 @@ Route::middleware([
     Route::name('dash.')->group(function(){
 
         Route::resource('users', UserController::class);
+        Route::put('/users/password/{user}', [UserController::class, 'update_password'])->name('users.password');
         Route::post('/users/export', [UserController::class, 'export'])->name('users.export');
+
 //        entity subject
         Route::resource('subjects', SubjectController::class)->except(['create', 'show']);
         Route::post('/subjects/export', [SubjectController::class, 'export'])->name('subjects.export');

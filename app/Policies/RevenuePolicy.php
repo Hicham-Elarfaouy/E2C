@@ -11,9 +11,19 @@ class RevenuePolicy
     /**
      * Determine whether the user can view any models.
      */
+    public function export(User $user): bool
+    {
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('revenues', $abilities);
+    }
+
+    /**
+     * Determine whether the user can view any models.
+     */
     public function viewAny(User $user): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('revenues', $abilities);
     }
 
     /**
@@ -29,7 +39,8 @@ class RevenuePolicy
      */
     public function create(User $user): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('revenues', $abilities);
     }
 
     /**
@@ -37,7 +48,8 @@ class RevenuePolicy
      */
     public function update(User $user, Revenue $revenue): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('revenues', $abilities);
     }
 
     /**
@@ -45,7 +57,8 @@ class RevenuePolicy
      */
     public function delete(User $user, Revenue $revenue): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('revenues', $abilities);
     }
 
     /**

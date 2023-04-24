@@ -1,0 +1,10 @@
+diagram de sequence
+https://lucid.app/lucidspark/56c963c1-6208-4dac-a481-56ace9b97df6/edit?viewport_loc=-4592%2C-2326%2C7630%2C3585%2C0_0&invitationId=inv_9d8ab49e-4a31-4542-b3b2-fa7b52416f0c
+
+
+use case diagram
+https://lucid.app/lucidchart/3f6c343d-d07a-452b-a044-5c4e2d44f6cb/edit?viewport_loc=-1111%2C17%2C5302%2C2426%2C0_0&invitationId=inv_1f1f2ff5-a8d7-4da2-9abf-ac3d035dd5bf
+
+
+class diagram
+https://lucid.app/lucidchart/bcec5b8f-7f34-493d-a377-99248803c6f7/edit?viewport_loc=-2676%2C-220%2C7665%2C3508%2C0_0&invitationId=inv_02c51a76-bbc6-4955-aa13-0e16200b6fb6

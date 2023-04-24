@@ -11,7 +11,9 @@ use App\Models\Subject;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class DashboardController extends Controller
 {
@@ -344,6 +346,16 @@ class DashboardController extends Controller
     // render dashboard view
     public function index()
     {
+        $user = Auth::user();
+
+        if(in_array($user->role->name, ['Teacher', 'Student'])){
+            return redirect()->route('dash.schedules.user', $user->id);
+        }
+
+        if (! Gate::allows('dashboard', $user)) {
+            abort(403, 'THIS ACTION IS UNAUTHORIZED.');
+        }
+
         $global = $this->getGlobal();
         $subjects = $this->getPopularSubject();
         $chartStudents = $this->getChartStudents();

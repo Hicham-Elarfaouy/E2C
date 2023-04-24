@@ -10,11 +10,17 @@ use Rap2hpoutre\FastExcel\FastExcel;
 
 class ExpenseController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Expense::class, 'expense');
+    }
+
     /**
      * export a listing of the resource.
      */
     public function export()
     {
+        $this->authorize('export', Expense::class);
         $expenses = Expense::all();
 
         // Export Data
@@ -61,7 +67,7 @@ class ExpenseController extends Controller
         if($request->type != 'subject'){
             $request['subject_id'] = null;
         }
-        
+
         $expense->update($request->all());
         return redirect()->route('dash.expenses.index');
     }
