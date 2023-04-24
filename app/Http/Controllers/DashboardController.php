@@ -347,6 +347,11 @@ class DashboardController extends Controller
     public function index()
     {
         $user = Auth::user();
+
+        if(in_array($user->role->name, ['Teacher', 'Student'])){
+            return redirect()->route('dash.schedules.user', $user->id);
+        }
+
         if (! Gate::allows('dashboard', $user)) {
             abort(403, 'THIS ACTION IS UNAUTHORIZED.');
         }
