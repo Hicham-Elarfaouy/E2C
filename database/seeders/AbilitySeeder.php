@@ -18,6 +18,7 @@ class AbilitySeeder extends Seeder
 //            'export subjects', 'index subjects', 'store subjects', 'update subjects', 'delete subjects',
             'dashboard',
             'users',
+            'user',
             'subjects',
             'classrooms',
             'schedules',

@@ -15,11 +15,17 @@ use Rap2hpoutre\FastExcel\FastExcel;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(User::class, 'user');
+    }
+
     /**
      * export a listing of the resource.
      */
     public function export()
     {
+        $this->authorize('export');
         $users = User::all();
 
         // Export Data
@@ -92,6 +98,7 @@ class UserController extends Controller
      */
     public function update_password(Request $request, User $user)
     {
+        $this->authorize('update_password');
         $request->validate([
             'password' => ['required', 'string', 'min:8', 'confirmed']
         ]);
