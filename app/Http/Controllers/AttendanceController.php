@@ -20,7 +20,7 @@ class AttendanceController extends Controller
      */
     public function export()
     {
-        $this->authorize('export');
+        $this->authorize('export', Attendance::class);
         $attendances = Attendance::all();
 
         // Export Data

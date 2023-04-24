@@ -21,7 +21,7 @@ class RequestController extends Controller
      */
     public function export()
     {
-        $this->authorize('export');
+        $this->authorize('export', Request::class);
         $requests = Request::all();
 
         // Export Data
@@ -33,7 +33,7 @@ class RequestController extends Controller
      */
     public function solve(Request $request)
     {
-        $this->authorize('solve');
+        $this->authorize('solve', Request::class);
         $request->solve = true;
         $request->save();
 
@@ -92,7 +92,7 @@ class RequestController extends Controller
      */
     public function show_user(User $user)
     {
-        $this->authorize('show_user', $user);
+        $this->authorize('show_user', [Request::class, $user]);
         $requests = Request::where('user_id', $user->id)->latest()->get();
         return view('dash.requests.show', compact('requests', 'user'));
     }

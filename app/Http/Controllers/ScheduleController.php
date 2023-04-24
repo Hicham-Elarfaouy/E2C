@@ -23,7 +23,7 @@ class ScheduleController extends Controller
      */
     public function export()
     {
-        $this->authorize('export');
+        $this->authorize('export', Schedule::class);
         $schedules = Schedule::all();
 
         // Export Data
@@ -35,7 +35,7 @@ class ScheduleController extends Controller
      */
     public function exportPDF(User $user)
     {
-        $this->authorize('exportPDF');
+        $this->authorize('exportPDF', Schedule::class);
         $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
         $hours = [8, 10, 14, 16];
         $classroom = $user->classroom_id;
@@ -53,7 +53,7 @@ class ScheduleController extends Controller
      */
     public function schedule(User $user)
     {
-        $this->authorize('schedule');
+        $this->authorize('schedule', Schedule::class);
         $schedules = collect();
         $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
         $hours = [8, 10, 14, 16];

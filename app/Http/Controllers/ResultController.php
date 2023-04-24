@@ -20,7 +20,7 @@ class ResultController extends Controller
      */
     public function export()
     {
-        $this->authorize('export');
+        $this->authorize('export', Result::class);
         $results = Result::all();
 
         // Export Data

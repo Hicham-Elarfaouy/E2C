@@ -19,7 +19,7 @@ class RevenueController extends Controller
      */
     public function export()
     {
-        $this->authorize('export');
+        $this->authorize('export', Revenue::class);
         $revenues = Revenue::all();
 
         // Export Data

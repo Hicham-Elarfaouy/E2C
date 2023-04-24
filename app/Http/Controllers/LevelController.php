@@ -19,7 +19,7 @@ class LevelController extends Controller
      */
     public function export()
     {
-        $this->authorize('export');
+        $this->authorize('export', Level::class);
         $levels = Level::all();
 
         // Export Data

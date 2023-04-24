@@ -19,7 +19,7 @@ class ClassroomController extends Controller
      */
     public function export()
     {
-        $this->authorize('export');
+        $this->authorize('export', Classroom::class);
         $classrooms = Classroom::all();
 
         // Export Data

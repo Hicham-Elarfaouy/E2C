@@ -21,7 +21,7 @@ class NoteController extends Controller
      */
     public function export()
     {
-        $this->authorize('export');
+        $this->authorize('export', Note::class);
         $notes = Note::all();
 
         // Export Data

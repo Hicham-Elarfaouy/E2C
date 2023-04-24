@@ -34,5 +34,40 @@ class AbilitySeeder extends Seeder
         foreach ($abilitiesAdmin as $ability) {
             Ability::create(['name' => $ability, 'role_id' => 2]);
         }
+
+
+        $abilitiesAccountant = [
+            'dashboard',
+            'user',
+            'revenues',
+            'expenses',
+        ];
+
+        foreach ($abilitiesAccountant as $ability) {
+            Ability::create(['name' => $ability, 'role_id' => 3]);
+        }
+
+
+        $abilitiesTeacher = [
+            'user',
+            'schedule',
+            'notes',
+            'results',
+        ];
+
+        foreach ($abilitiesTeacher as $ability) {
+            Ability::create(['name' => $ability, 'role_id' => 4]);
+        }
+
+
+        $abilitiesStudent = [
+            'user',
+            'schedule',
+            'request',
+        ];
+
+        foreach ($abilitiesStudent as $ability) {
+            Ability::create(['name' => $ability, 'role_id' => 5]);
+        }
     }
 }

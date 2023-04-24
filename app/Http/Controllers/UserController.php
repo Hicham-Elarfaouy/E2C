@@ -25,7 +25,7 @@ class UserController extends Controller
      */
     public function export()
     {
-        $this->authorize('export');
+        $this->authorize('export', User::class);
         $users = User::all();
 
         // Export Data
@@ -98,7 +98,7 @@ class UserController extends Controller
      */
     public function update_password(Request $request, User $user)
     {
-        $this->authorize('update_password');
+        $this->authorize('update_password', User::class);
         $request->validate([
             'password' => ['required', 'string', 'min:8', 'confirmed']
         ]);

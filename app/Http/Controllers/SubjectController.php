@@ -22,7 +22,7 @@ class SubjectController extends Controller
      */
     public function export()
     {
-        $this->authorize('export');
+        $this->authorize('export', Subject::class);
         $subjects = Subject::all();
 
         // Export Data

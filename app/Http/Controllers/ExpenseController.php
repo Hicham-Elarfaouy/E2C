@@ -20,7 +20,7 @@ class ExpenseController extends Controller
      */
     public function export()
     {
-        $this->authorize('export');
+        $this->authorize('export', Expense::class);
         $expenses = Expense::all();
 
         // Export Data
