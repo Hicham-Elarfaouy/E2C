@@ -9,11 +9,17 @@ use Rap2hpoutre\FastExcel\FastExcel;
 
 class ClassroomController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Classroom::class, 'classroom');
+    }
+
     /**
      * export a listing of the resource.
      */
     public function export()
     {
+        $this->authorize('export');
         $classrooms = Classroom::all();
 
         // Export Data

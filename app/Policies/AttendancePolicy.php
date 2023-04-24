@@ -11,9 +11,19 @@ class AttendancePolicy
     /**
      * Determine whether the user can view any models.
      */
+    public function export(User $user): bool
+    {
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('attendances', $abilities);
+    }
+
+    /**
+     * Determine whether the user can view any models.
+     */
     public function viewAny(User $user): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('attendances', $abilities);
     }
 
     /**
@@ -29,7 +39,8 @@ class AttendancePolicy
      */
     public function create(User $user): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('attendances', $abilities);
     }
 
     /**
@@ -37,7 +48,8 @@ class AttendancePolicy
      */
     public function update(User $user, Attendance $attendance): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('attendances', $abilities);
     }
 
     /**
@@ -45,7 +57,8 @@ class AttendancePolicy
      */
     public function delete(User $user, Attendance $attendance): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('attendances', $abilities);
     }
 
     /**

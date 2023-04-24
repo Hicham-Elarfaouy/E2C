@@ -13,11 +13,17 @@ use Rap2hpoutre\FastExcel\FastExcel;
 
 class ScheduleController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Schedule::class, 'schedule');
+    }
+
     /**
      * export a listing of the resource.
      */
     public function export()
     {
+        $this->authorize('export');
         $schedules = Schedule::all();
 
         // Export Data
@@ -29,6 +35,7 @@ class ScheduleController extends Controller
      */
     public function exportPDF(User $user)
     {
+        $this->authorize('exportPDF');
         $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
         $hours = [8, 10, 14, 16];
         $classroom = $user->classroom_id;
@@ -46,6 +53,7 @@ class ScheduleController extends Controller
      */
     public function schedule(User $user)
     {
+        $this->authorize('schedule');
         $schedules = collect();
         $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
         $hours = [8, 10, 14, 16];

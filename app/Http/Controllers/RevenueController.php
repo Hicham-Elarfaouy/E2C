@@ -9,11 +9,17 @@ use Rap2hpoutre\FastExcel\FastExcel;
 
 class RevenueController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Revenue::class, 'revenue');
+    }
+
     /**
      * export a listing of the resource.
      */
     public function export()
     {
+        $this->authorize('export');
         $revenues = Revenue::all();
 
         // Export Data

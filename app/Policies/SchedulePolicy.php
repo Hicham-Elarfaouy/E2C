@@ -11,9 +11,37 @@ class SchedulePolicy
     /**
      * Determine whether the user can view any models.
      */
+    public function export(User $user): bool
+    {
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('schedules', $abilities);
+    }
+
+    /**
+     * Determine whether the user can view any models.
+     */
+    public function exportPDF(User $user): bool
+    {
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('schedule', $abilities);
+    }
+
+    /**
+     * Determine whether the user can view any models.
+     */
+    public function schedule(User $user): bool
+    {
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('schedule', $abilities);
+    }
+
+    /**
+     * Determine whether the user can view any models.
+     */
     public function viewAny(User $user): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('schedules', $abilities);
     }
 
     /**
@@ -29,7 +57,8 @@ class SchedulePolicy
      */
     public function create(User $user): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('schedules', $abilities);
     }
 
     /**
@@ -37,7 +66,8 @@ class SchedulePolicy
      */
     public function update(User $user, Schedule $schedule): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('schedules', $abilities);
     }
 
     /**
@@ -45,7 +75,8 @@ class SchedulePolicy
      */
     public function delete(User $user, Schedule $schedule): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('schedules', $abilities);
     }
 
     /**

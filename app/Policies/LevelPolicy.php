@@ -11,9 +11,19 @@ class LevelPolicy
     /**
      * Determine whether the user can view any models.
      */
+    public function export(User $user): bool
+    {
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('levels', $abilities);
+    }
+
+    /**
+     * Determine whether the user can view any models.
+     */
     public function viewAny(User $user): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('levels', $abilities);
     }
 
     /**
@@ -29,7 +39,8 @@ class LevelPolicy
      */
     public function create(User $user): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('levels', $abilities);
     }
 
     /**
@@ -37,7 +48,8 @@ class LevelPolicy
      */
     public function update(User $user, Level $level): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('levels', $abilities);
     }
 
     /**
@@ -45,7 +57,8 @@ class LevelPolicy
      */
     public function delete(User $user, Level $level): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('levels', $abilities);
     }
 
     /**

@@ -11,9 +11,37 @@ class RequestPolicy
     /**
      * Determine whether the user can view any models.
      */
+    public function export(User $user): bool
+    {
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('requests', $abilities);
+    }
+
+    /**
+     * Determine whether the user can view any models.
+     */
+    public function solve(User $user): bool
+    {
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('requests', $abilities);
+    }
+
+    /**
+     * Determine whether the user can view any models.
+     */
+    public function show_user(User $user, User $model): bool
+    {
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('request', $abilities) && $user->id == $model->id;
+    }
+
+    /**
+     * Determine whether the user can view any models.
+     */
     public function viewAny(User $user): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('requests', $abilities);
     }
 
     /**
@@ -21,7 +49,8 @@ class RequestPolicy
      */
     public function view(User $user, Request $request): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('requests', $abilities);
     }
 
     /**
@@ -29,7 +58,8 @@ class RequestPolicy
      */
     public function create(User $user): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('request', $abilities);
     }
 
     /**
@@ -45,7 +75,8 @@ class RequestPolicy
      */
     public function delete(User $user, Request $request): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('requests', $abilities) || $user->id == $request->user_id;
     }
 
     /**

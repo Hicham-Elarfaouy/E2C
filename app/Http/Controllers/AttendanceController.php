@@ -10,11 +10,17 @@ use Rap2hpoutre\FastExcel\FastExcel;
 
 class AttendanceController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Attendance::class, 'attendance');
+    }
+
     /**
      * export a listing of the resource.
      */
     public function export()
     {
+        $this->authorize('export');
         $attendances = Attendance::all();
 
         // Export Data

@@ -11,9 +11,19 @@ class ResultPolicy
     /**
      * Determine whether the user can view any models.
      */
+    public function export(User $user): bool
+    {
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('results', $abilities);
+    }
+
+    /**
+     * Determine whether the user can view any models.
+     */
     public function viewAny(User $user): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('results', $abilities);
     }
 
     /**
@@ -29,7 +39,8 @@ class ResultPolicy
      */
     public function create(User $user): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('results', $abilities);
     }
 
     /**
@@ -37,7 +48,8 @@ class ResultPolicy
      */
     public function update(User $user, Result $result): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('results', $abilities);
     }
 
     /**
@@ -45,7 +57,8 @@ class ResultPolicy
      */
     public function delete(User $user, Result $result): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('results', $abilities);
     }
 
     /**
