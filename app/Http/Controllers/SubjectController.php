@@ -11,11 +11,18 @@ use Rap2hpoutre\FastExcel\FastExcel;
 
 class SubjectController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->authorizeResource(Subject::class, 'subject');
+    }
+
     /**
      * export a listing of the resource.
      */
     public function export()
     {
+        $this->authorize('export');
         $subjects = Subject::all();
 
         // Export Data
@@ -28,7 +35,7 @@ class SubjectController extends Controller
     public function index()
     {
         $subjects = Subject::all();
-        $teachers = User::whereHas('role', function ($query){
+        $teachers = User::whereHas('role', function ($query) {
             $query->where('name', 'Teacher');
         })->get();
         return view('dash.subjects.subjects', compact('subjects', 'teachers'));
@@ -48,7 +55,7 @@ class SubjectController extends Controller
      */
     public function edit(Subject $subject)
     {
-        $teachers = User::whereHas('role', function ($query){
+        $teachers = User::whereHas('role', function ($query) {
             $query->where('name', 'Teacher');
         })->get();
         return view('dash.subjects.update', compact('subject', 'teachers'));
