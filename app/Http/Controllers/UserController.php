@@ -8,7 +8,9 @@ use App\Models\Role;
 use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Rap2hpoutre\FastExcel\FastExcel;
 
 class UserController extends Controller
@@ -81,6 +83,21 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, User $user)
     {
         $user->update($request->all());
+
+        return redirect()->route('dash.users.index');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update_password(Request $request, User $user)
+    {
+        $request->validate([
+            'password' => ['required', 'string', 'min:8', 'confirmed']
+        ]);
+
+        $user->password = Hash::make($request->password);
+        $user->save();
 
         return redirect()->route('dash.users.index');
     }
