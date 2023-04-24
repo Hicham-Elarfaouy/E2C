@@ -66,4 +66,14 @@ class User extends Authenticatable
     {
         return $this->hasOne(Subject::class);
     }
+
+    public function classroom()
+    {
+        return $this->belongsTo(Classroom::class);
+    }
+
+    public function level()
+    {
+        return $this->belongsTo(Level::class);
+    }
 }
