@@ -7,10 +7,11 @@ use App\Models\User;
 class DashboardPolicy
 {
     /**
-     * Create a new policy instance.
+     * Determine whether the user can view any models.
      */
-    public function __construct()
+    public function viewAny(User $user): bool
     {
-        //
+        $abilities = $user->role->abilities->pluck('name')->toArray();
+        return in_array('dashboard', $abilities);
     }
 }
