@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Classroom;
+use App\Models\Level;
+use App\Models\Role;
 use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use Illuminate\Support\Facades\Auth;
 use Rap2hpoutre\FastExcel\FastExcel;
 
 class UserController extends Controller
@@ -25,7 +29,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $user = Auth::user()->id;
+        $users = User::where('id', '!=', $user)->get();
         return view('dash.users.users', compact('users'));
     }
 
@@ -34,7 +39,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('dash.users.add_user');
+        $roles = Role::all();
+        $classrooms = Classroom::all();
+        $levels = Level::all();
+        return view('dash.users.add_user', compact('roles', 'classrooms', 'levels'));
     }
 
     /**
@@ -42,7 +50,10 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        //
+        $request->merge(['password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi']);
+        User::create($request->all());
+
+        return redirect()->route('dash.users.index');
     }
 
     /**
@@ -58,7 +69,10 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        $roles = Role::all();
+        $classrooms = Classroom::all();
+        $levels = Level::all();
+        return view('dash.users.update_user', compact('user', 'roles', 'classrooms', 'levels'));
     }
 
     /**
@@ -66,7 +80,9 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        $user->update($request->all());
+
+        return redirect()->route('dash.users.index');
     }
 
     /**

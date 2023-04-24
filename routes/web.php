@@ -47,6 +47,7 @@ Route::middleware([
 
         Route::resource('users', UserController::class);
         Route::post('/users/export', [UserController::class, 'export'])->name('users.export');
+
 //        entity subject
         Route::resource('subjects', SubjectController::class)->except(['create', 'show']);
         Route::post('/subjects/export', [SubjectController::class, 'export'])->name('subjects.export');
